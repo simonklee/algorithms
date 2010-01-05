@@ -1,8 +1,9 @@
 PROJECTNAME=search
 
 # Project sourcefiles
-PRJSRC=../testing/citrus.c\
-	linear-search.c\
-	binary-search.c\
+PRJSRC=../../c/citrus/citrus.c\
+	linearsearch.c\
+	binarysearch.c\
+	searchtest.c\
 
 include ../makefile.src
