@@ -5,6 +5,7 @@
 #include "../../c/citrus/citrus.h"
 
 #define MAX 10
+#define VERBOSE 0
 static void testlsearch(Suit *suit);
 
 int main(int argc, char *argv[]) {
@@ -36,7 +37,7 @@ static void testlsearch(Suit *suit) {
 	arr[3] = 7;	
 	arr[4] = 8;	
     
-    //  set current lenght of array.
+	// set current lenght of array.
 	len = 5;
 	
 	

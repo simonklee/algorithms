@@ -17,20 +17,33 @@ int lfind(int *key, int *base, int n) {
 	return -1;
 }
 
+// linear sorted array search. Stop looking if a larger number is found.
+int lsortfind(int *key, int *base, int n) {
+	int i;
+	for (i = 0; i < n; i++) {
+		if (base[i] == *key) 
+			return i;
+		else if (base[i] > *key)
+			return -1;
+	}	
+	return -1;	
+}
+
 // insertion of unsorted array, insert at the end.
 void linsert(int *key, int *base, int *n, int max) {
 	// check array boundary.
 	if (*n < max) {
-		base[*n] = *key; 	// add new key to the end of array.
-		*n += 1; 			// increase boundery of array.
+		base[*n] = *key;	// add new key to the end of array.
+		*n += 1;			// increase boundery of array.
 	}
 }
 
 // insertion of sorted array, insert in correct location.
 void lsortinsert(int *key, int *base, int *n, int max) {
+	int i; // = lsortfind(key, base, *n);
 	// check array boundary.
 	if (*n < max) {
-	
+		
 		
 	}
 }
