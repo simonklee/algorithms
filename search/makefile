@@ -7,4 +7,4 @@ PRJSRC=../../c/citrus/citrus.c\
 	searchtest.c\
 CFLAGS=-I ../../c/citrus/
 
-include ../makefile.src
+include ../makefile.mk
