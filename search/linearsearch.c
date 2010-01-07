@@ -3,13 +3,12 @@
 // - Simon Zimmermann.
 
 #include <stdio.h>
-#include <assert.h>
 #include "linearsearch.h"
 
 static void shiftleft(int *base, int n, int l);
 static void shiftright(int *base, int n, int l);
 
-// linear search of array.
+// linear search of array. O(N)
 int lfind(int *key, int *base, int n) {
 	int i;
 	for (i = 0; i < n; i++) {
@@ -38,7 +37,7 @@ void ldelete(int *key, int *base, int *n) {
 	}
 }
 
-// linear sorted array search. Stop looking if a larger number is found. O(N/2)
+// linear sorted search. Stop looking if a larger number is found. avg O(N/2)
 int lsortfind(int *key, int *base, int n) {
 	int i;
 	for (i = 0; i < n; i++) {

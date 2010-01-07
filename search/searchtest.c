@@ -4,9 +4,11 @@
 #include <citrus.h>
 #include "linearsearch.h"
 
-#define MAX 10
+#define MAX 50
 #define VERBOSE 1
+
 static void testlsearch(Suit *suit);
+static void testbsearch(Suit *suit);
 
 int main(int argc, char *argv[]) {
 	Suit *suit;
@@ -16,7 +18,8 @@ int main(int argc, char *argv[]) {
 	memset(suit, 0, sizeof *suit);
 	
 	// run tests.
-	testlsearch(suit);
+	//testlsearch(suit);
+	testbsearch(suit);
 	
 	// view summary.
 	Summary(suit);
@@ -26,8 +29,32 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
+static void testbsearch(Suit *suit) {
+    int key, n, i;
+   	int arr[MAX], arrtmp[MAX];
+   	
+   	// fill arrays
+   	n = (MAX - 20);
+    for (i = 0; i < n; i++) {
+        arr[i] = i * 2;
+        arrtmp[i] = i * 2;        
+    }
+   	
+    // test integer division.
+    Equals(suit, (11 / 2), 5); 
+    
+    // test binary search.
+    key = 4;
+    printf("%d\n", bfind(&key, arr, n)); 
+  	#if VERBOSE
+    for (i = 0; i < n; i++) {
+        printf("%d, ", arr[i]);
+    }
+    printf("\n");
+    #endif
+}
 static void testlsearch(Suit *suit) {
-	int key, kindex, n, max, len, i;
+	int key, kindex, len, i;
 	int arr[MAX], arrtmp[MAX];
 
 	// fill array.
