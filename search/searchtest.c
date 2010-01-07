@@ -5,7 +5,7 @@
 #include "linearsearch.h"
 
 #define MAX 10
-#define VERBOSE 0
+#define VERBOSE 1
 static void testlsearch(Suit *suit);
 
 int main(int argc, char *argv[]) {
@@ -67,9 +67,11 @@ static void testlsearch(Suit *suit) {
 	EqualsA(suit, arr, arrtmp, len, sizeof(int), IntComp);
 	
 	#if VERBOSE
+	printf("ldelete test\n");
 	for (i = 0; i < len; i++) {
 		printf("arr[%d] %d, arrtmp[%d]: %d\n", i, arr[i], i, arrtmp[i]);
 	}
+	printf("\n");
 	#endif // VERBOSE
 	
 	// Test linsert
@@ -85,8 +87,56 @@ static void testlsearch(Suit *suit) {
 	EqualsA(suit, arr, arrtmp, len, sizeof(int), IntComp);
 	
 	#if VERBOSE	
+	printf("linsert test\n");
 	for (i = 0; i < len; i++) {
 		printf("arr[%d] %d, arrtmp[%d]: %d\n", i, arr[i], i, arrtmp[i]);
-	}	
+	}
+	printf("array len: %d\n", len);
+	printf("\n");
 	#endif // VERBOSE
+	
+	// test sorted insertion
+	// set temp array with expected result of outcome after insertion.
+	arrtmp[0] = 1;
+	arrtmp[1] = 4;
+	arrtmp[2] = 5;	
+	arrtmp[3] = 6;	
+	arrtmp[4] = 7;
+	arrtmp[5] = 8;
+	arrtmp[6] = 10;
+	arrtmp[7] = 15;
+
+	key = 1;
+	lsortinsert(&key, arr, &len, MAX);
+	
+	key = 6;
+	lsortinsert(&key, arr, &len, MAX);
+	
+	key = 15;
+	lsortinsert(&key, arr, &len, MAX);	
+	
+	EqualsA(suit, arr, arrtmp, len, sizeof(int), IntComp);
+	Equals(suit, len, 8);
+	
+	#if VERBOSE	
+	printf("lsortinsert test\n");
+	for (i = 0; i < len; i++) {
+		printf("arr[%d] %d, arrtmp[%d]: %d\n", i, arr[i], i, arrtmp[i]);
+	}
+	printf("array len: %d\n", len);	
+	printf("\n");
+	#endif // VERBOSE	
+	
+    // array sorted find.
+	key = 6;
+	
+	// do find.
+	kindex = lsortfind(&key, arr, len);
+	
+	// check results.
+	Equals(suit, kindex, 3);
+	
+	#if VERBOSE
+	printf("Key: %d, Key Index was: %d\n\n", key, kindex);
+	#endif // VERBOSE	
 }
