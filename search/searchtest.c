@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <citrus.h>
 #include "linearsearch.h"
-#include "../../c/citrus/citrus.h"
 
 #define MAX 10
 #define VERBOSE 0
@@ -39,8 +39,7 @@ static void testlsearch(Suit *suit) {
     
 	// set current lenght of array.
 	len = 5;
-	
-	
+		
 	// test lfind.
 	key = 6;
 	
@@ -53,8 +52,7 @@ static void testlsearch(Suit *suit) {
 	#if VERBOSE
 	printf("Key: %d, Key Index was: %d\n", key, kindex);
 	#endif // VERBOSE
-	
-		
+			
 	// test ldelete.
 	// set temp array with expected result of outcome after delete.
 	arrtmp[0] = 4;
