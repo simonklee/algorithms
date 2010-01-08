@@ -45,14 +45,17 @@ static void testbsearch(Suit *suit) {
     
     // test binary search.
     key = 4;
+    Assert(suit, bfind(&key, arr, n) == 2);
     printf("%d\n", bfind(&key, arr, n)); 
   	#if VERBOSE
     for (i = 0; i < n; i++) {
-        printf("%d, ", arr[i]);
+        key = i * 2;
+        printf("arr[%d]: %d\n", bfind(&key, arr, n), arr[i]);
     }
     printf("\n");
     #endif
 }
+
 static void testlsearch(Suit *suit) {
 	int key, kindex, len, i;
 	int arr[MAX], arrtmp[MAX];
