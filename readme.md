@@ -6,7 +6,7 @@ Data Structures at the University of Agder.
 License
 -------
 algorithms
-Copyright (C) 2009  Simon Zimmermann
+Copyright (C) 2010  Simon Zimmermann
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
