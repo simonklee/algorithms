@@ -2,14 +2,14 @@
 #define __LINEARSEARCH_H
 
 // unsorted find and insert.
-int lfind(int *key, int *base, int n); 
-void linsert(int *key, int *base, int *n, int max);
+int LinearSearch(int *key, int *base, int n); 
+void LinearInsert(int *key, int *base, int *n, int max);
 
 // works for both sorted and unsorted array.
-void ldelete(int *key, int *base, int *n);
+void LinearDelete(int *key, int *base, int *n);
 
 // sorted linear insert and find.
-int lsortfind(int *key, int *base, int n); 
-void lsortinsert(int *key, int *base, int *n, int max);
+int LinearSearchS(int *key, int *base, int n); 
+void LinearInsertS(int *key, int *base, int *n, int max);
 
 #endif

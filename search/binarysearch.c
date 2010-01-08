@@ -1,20 +1,34 @@
 #include <stdio.h>
 
-int bfind(int *key, int *base, int n) {
-    int b = 0, e = n, v;
+int BinarySearch(int *key, int *base, int n) {
+    int min = 0, max = n, mid;
     
-    while (e >= b) {
-        v = (b + e) / 2;
-        if (base[v] < *key)
-            b = v + 1;
-        else if (base[v] > *key)
-            e = v - 1;
-        //else if (base[v] == *key) 
+    while (min < max) {
+        mid = (min + max) / 2;
+        if (base[mid] < *key)
+            min = mid + 1;
+        else if (base[mid] > *key)
+            max = mid;
+        //else if (base[mid] == *key) 
         // if not bigger or not smaller, then === key
         else 
-            return v;            
+            return mid;            
     }
     return -1;
 } 
-void bdelete(int *key, int *base, int *n) {}
-void binsert(int *key, int *base, int *n, int max) {}
+
+// recursive solution.
+// see: http://en.wikipedia.org/wiki/Binary_search_algorithm#Recursive
+int BinarySearch2(int *key, int *base, int min, int max) {
+    if (max < min)
+        return -1;
+    int mid = min + ((max - min) / 2);
+    if (base[mid] > *key)
+        return BinarySearch2(key, base, min, mid - 1);
+    else if (base[mid] < *key)
+        return BinarySearch2(key, base, mid + 1, max);
+    else 
+        return mid;            
+}
+void BinaryDelete(int *key, int *base, int *n) {}
+void BinaryInsert(int *key, int *base, int *n, int max) {}

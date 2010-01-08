@@ -5,11 +5,11 @@
 #include <stdio.h>
 #include "linearsearch.h"
 
-static void shiftleft(int *base, int n, int l);
-static void shiftright(int *base, int n, int l);
+static void shiftLeft(int *base, int n, int l);
+static void shiftRight(int *base, int n, int l);
 
 // linear search of array. O(N)
-int lfind(int *key, int *base, int n) {
+int LinearSearch(int *key, int *base, int n) {
 	int i;
 	for (i = 0; i < n; i++) {
 		if (base[i] == *key) 
@@ -19,7 +19,7 @@ int lfind(int *key, int *base, int n) {
 }
 
 // insertion of unsorted array, insert at the end. O(1)
-void linsert(int *key, int *base, int *n, int max) {
+void LinearInsert(int *key, int *base, int *n, int max) {
 	// check array boundary.
 	if (*n < max) {
 		base[*n] = *key;	// add new key to the end of array.
@@ -28,8 +28,8 @@ void linsert(int *key, int *base, int *n, int max) {
 }
 
 // delete and fill the gap. O(N)
-void ldelete(int *key, int *base, int *n) {
-	int i = lfind(key, base, *n);
+void LinearDelete(int *key, int *base, int *n) {
+	int i = LinearSearch(key, base, *n);
 	*n -= 1;
 	// shift to the left.
 	for (; i < *n; i++) {
@@ -38,7 +38,7 @@ void ldelete(int *key, int *base, int *n) {
 }
 
 // linear sorted search. Stop looking if a larger number is found. avg O(N/2)
-int lsortfind(int *key, int *base, int n) {
+int LinearSearchS(int *key, int *base, int n) {
 	int i;
 	for (i = 0; i < n; i++) {
 		if (base[i] == *key) 
@@ -50,7 +50,7 @@ int lsortfind(int *key, int *base, int n) {
 }
 
 // insertion of sorted array, insert in correct location. O(N)
-void lsortinsert(int *key, int *base, int *n, int max) {
+void LinearInsertS(int *key, int *base, int *n, int max) {
 	int i, j;
 	
 	// check array boundary.
@@ -73,12 +73,12 @@ void lsortinsert(int *key, int *base, int *n, int max) {
 }
 
 // Linear move function.
-static void shiftleft(int *base, int n, int l) {
+static void shiftLeft(int *base, int n, int l) {
     // write code
 }
 
 // Linear move function.
-static void shiftright(int *base, int n, int l) {
+static void shiftRight(int *base, int n, int l) {
     // write code
 }
 

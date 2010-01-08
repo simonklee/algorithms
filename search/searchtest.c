@@ -5,10 +5,10 @@
 #include "linearsearch.h"
 
 #define MAX 50
-#define VERBOSE 1
+#define VERBOSE 0
 
-static void testlsearch(Suit *suit);
-static void testbsearch(Suit *suit);
+static void testLinearSearch(Suit *suit);
+static void testBinarySearch(Suit *suit);
 
 int main(int argc, char *argv[]) {
 	Suit *suit;
@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
 	memset(suit, 0, sizeof *suit);
 	
 	// run tests.
-	//testlsearch(suit);
-	testbsearch(suit);
+	testLinearSearch(suit);
+	testBinarySearch(suit);
 	
 	// view summary.
 	Summary(suit);
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
-static void testbsearch(Suit *suit) {
+static void testBinarySearch(Suit *suit) {
     int key, n, i;
    	int arr[MAX], arrtmp[MAX];
    	
@@ -45,18 +45,25 @@ static void testbsearch(Suit *suit) {
     
     // test binary search.
     key = 4;
-    Assert(suit, bfind(&key, arr, n) == 2);
-    printf("%d\n", bfind(&key, arr, n)); 
+    Assert(suit, BinarySearch(&key, arr, n) == 2);
+    
+    // test non-existing key.
+    key = 3;
+    Assert(suit, BinarySearch(&key, arr, n) == -1);
+    
+    // test recursive binary search search.
+    key = 10;
+    Assert(suit, BinarySearch2(&key, arr, 0, n) == 5);
   	#if VERBOSE
     for (i = 0; i < n; i++) {
         key = i * 2;
-        printf("arr[%d]: %d\n", bfind(&key, arr, n), arr[i]);
+        printf("arr[%d]: %d\n", BinarySearch(&key, arr, n), arr[i]);
     }
     printf("\n");
     #endif
 }
 
-static void testlsearch(Suit *suit) {
+static void testLinearSearch(Suit *suit) {
 	int key, kindex, len, i;
 	int arr[MAX], arrtmp[MAX];
 
@@ -70,11 +77,11 @@ static void testlsearch(Suit *suit) {
 	// set current lenght of array.
 	len = 5;
 		
-	// test lfind.
+	// test LinearSearch.
 	key = 6;
 	
 	// do find.
-	kindex = lfind(&key, arr, len);
+	kindex = LinearSearch(&key, arr, len);
 	
 	// check results.
 	Equals(suit, kindex, 2);
@@ -83,7 +90,7 @@ static void testlsearch(Suit *suit) {
 	printf("Key: %d, Key Index was: %d\n", key, kindex);
 	#endif // VERBOSE
 			
-	// test ldelete.
+	// test LinearDelete.
 	// set temp array with expected result of outcome after delete.
 	arrtmp[0] = 4;
 	arrtmp[1] = 5;	
@@ -91,33 +98,33 @@ static void testlsearch(Suit *suit) {
 	arrtmp[3] = 8;	
 	
 	// do delete.
-	ldelete(&key, arr, &len);
+	LinearDelete(&key, arr, &len);
 	
 	// check results.
 	EqualsA(suit, arr, arrtmp, len, sizeof(int), IntComp);
 	
 	#if VERBOSE
-	printf("ldelete test\n");
+	printf("LinearDelete test\n");
 	for (i = 0; i < len; i++) {
 		printf("arr[%d] %d, arrtmp[%d]: %d\n", i, arr[i], i, arrtmp[i]);
 	}
 	printf("\n");
 	#endif // VERBOSE
 	
-	// Test linsert
+	// Test LinearInsert
 	key = 10;
 	
 	// manually set arrtemp with expected outcome after insert.
 	arrtmp[4] = 10;
 	
 	// do insert.
-	linsert(&key, arr, &len, MAX);
+	LinearInsert(&key, arr, &len, MAX);
 	
 	// check results.
 	EqualsA(suit, arr, arrtmp, len, sizeof(int), IntComp);
 	
 	#if VERBOSE	
-	printf("linsert test\n");
+	printf("LinearInsert test\n");
 	for (i = 0; i < len; i++) {
 		printf("arr[%d] %d, arrtmp[%d]: %d\n", i, arr[i], i, arrtmp[i]);
 	}
@@ -137,19 +144,19 @@ static void testlsearch(Suit *suit) {
 	arrtmp[7] = 15;
 
 	key = 1;
-	lsortinsert(&key, arr, &len, MAX);
+	LinearInsertS(&key, arr, &len, MAX);
 	
 	key = 6;
-	lsortinsert(&key, arr, &len, MAX);
+	LinearInsertS(&key, arr, &len, MAX);
 	
 	key = 15;
-	lsortinsert(&key, arr, &len, MAX);	
+	LinearInsertS(&key, arr, &len, MAX);	
 	
 	EqualsA(suit, arr, arrtmp, len, sizeof(int), IntComp);
 	Equals(suit, len, 8);
 	
 	#if VERBOSE	
-	printf("lsortinsert test\n");
+	printf("LinearInsertS test\n");
 	for (i = 0; i < len; i++) {
 		printf("arr[%d] %d, arrtmp[%d]: %d\n", i, arr[i], i, arrtmp[i]);
 	}
@@ -161,7 +168,7 @@ static void testlsearch(Suit *suit) {
 	key = 6;
 	
 	// do find.
-	kindex = lsortfind(&key, arr, len);
+	kindex = LinearSearchS(&key, arr, len);
 	
 	// check results.
 	Equals(suit, kindex, 3);
