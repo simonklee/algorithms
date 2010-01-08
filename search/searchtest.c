@@ -3,33 +3,34 @@
 #include <string.h>
 #include <citrus.h>
 #include "linearsearch.h"
+#include "binarysearch.h"
 
 #define MAX 50
 #define VERBOSE 0
 
-static void testLinearSearch(Suit *suit);
-static void testBinarySearch(Suit *suit);
+static void testLinearSearch(Suite *suite);
+static void testBinarySearch(Suite *suite);
 
 int main(int argc, char *argv[]) {
-	Suit *suit;
+	Suite *suite;
 	
 	// allocate memory.
-	suit = malloc(sizeof (Suit *));
-	memset(suit, 0, sizeof *suit);
+	suite = malloc(sizeof (Suite *));
+	memset(suite, 0, sizeof *suite);
 	
 	// run tests.
-	testLinearSearch(suit);
-	testBinarySearch(suit);
+	testLinearSearch(suite);
+	testBinarySearch(suite);
 	
 	// view summary.
-	Summary(suit);
+	Summary(suite);
 	
 	// clean end.
-	free(suit);
+	free(suite);
 	return 0;
 }
 
-static void testBinarySearch(Suit *suit) {
+static void testBinarySearch(Suite *suite) {
     int key, n, i;
    	int arr[MAX], arrtmp[MAX];
    	
@@ -41,19 +42,19 @@ static void testBinarySearch(Suit *suit) {
     }
    	
     // test integer division.
-    Equals(suit, (11 / 2), 5); 
+    Equals(suite, (11 / 2), 5); 
     
     // test binary search.
     key = 4;
-    Assert(suit, BinarySearch(&key, arr, n) == 2);
+    Assert(suite, BinarySearch(&key, arr, n) == 2);
     
     // test non-existing key.
     key = 3;
-    Assert(suit, BinarySearch(&key, arr, n) == -1);
+    Assert(suite, BinarySearch(&key, arr, n) == -1);
     
     // test recursive binary search search.
     key = 10;
-    Assert(suit, BinarySearch2(&key, arr, 0, n) == 5);
+    Assert(suite, BinarySearch2(&key, arr, 0, n) == 5);
   	#if VERBOSE
     for (i = 0; i < n; i++) {
         key = i * 2;
@@ -63,7 +64,7 @@ static void testBinarySearch(Suit *suit) {
     #endif
 }
 
-static void testLinearSearch(Suit *suit) {
+static void testLinearSearch(Suite *suite) {
 	int key, kindex, len, i;
 	int arr[MAX], arrtmp[MAX];
 
@@ -84,7 +85,7 @@ static void testLinearSearch(Suit *suit) {
 	kindex = LinearSearch(&key, arr, len);
 	
 	// check results.
-	Equals(suit, kindex, 2);
+	Equals(suite, kindex, 2);
 	
 	#if VERBOSE
 	printf("Key: %d, Key Index was: %d\n", key, kindex);
@@ -101,7 +102,7 @@ static void testLinearSearch(Suit *suit) {
 	LinearDelete(&key, arr, &len);
 	
 	// check results.
-	EqualsA(suit, arr, arrtmp, len, sizeof(int), IntComp);
+	EqualsA(suite, arr, arrtmp, len, sizeof(int), IntComp);
 	
 	#if VERBOSE
 	printf("LinearDelete test\n");
@@ -121,7 +122,7 @@ static void testLinearSearch(Suit *suit) {
 	LinearInsert(&key, arr, &len, MAX);
 	
 	// check results.
-	EqualsA(suit, arr, arrtmp, len, sizeof(int), IntComp);
+	EqualsA(suite, arr, arrtmp, len, sizeof(int), IntComp);
 	
 	#if VERBOSE	
 	printf("LinearInsert test\n");
@@ -152,8 +153,8 @@ static void testLinearSearch(Suit *suit) {
 	key = 15;
 	LinearInsertS(&key, arr, &len, MAX);	
 	
-	EqualsA(suit, arr, arrtmp, len, sizeof(int), IntComp);
-	Equals(suit, len, 8);
+	EqualsA(suite, arr, arrtmp, len, sizeof(int), IntComp);
+	Equals(suite, len, 8);
 	
 	#if VERBOSE	
 	printf("LinearInsertS test\n");
@@ -171,7 +172,7 @@ static void testLinearSearch(Suit *suit) {
 	kindex = LinearSearchS(&key, arr, len);
 	
 	// check results.
-	Equals(suit, kindex, 3);
+	Equals(suite, kindex, 3);
 	
 	#if VERBOSE
 	printf("Key: %d, Key Index was: %d\n\n", key, kindex);
