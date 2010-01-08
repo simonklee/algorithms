@@ -18,6 +18,10 @@ int main(int argc, char *argv[]) {
 	suite = malloc(sizeof (Suite *));
 	memset(suite, 0, sizeof *suite);
 	
+	#if VERBOSE
+  	printf("Verbose is set to true and will Print messages during test. \n");
+    #endif
+    
 	// run tests.
 	testLinearSearch(suite);
 	testBinarySearch(suite);
@@ -31,11 +35,11 @@ int main(int argc, char *argv[]) {
 }
 
 static void testBinarySearch(Suite *suite) {
-    int key, n, i;
+    int key, n, i, tmp;
    	int arr[MAX], arrtmp[MAX];
    	
    	// fill arrays
-   	n = (MAX - 20);
+   	n = (MAX - 30);
     for (i = 0; i < n; i++) {
         arr[i] = i * 2;
         arrtmp[i] = i * 2;        
@@ -56,11 +60,55 @@ static void testBinarySearch(Suite *suite) {
     key = 10;
     Assert(suite, BinarySearch2(&key, arr, 0, n) == 5);
   	#if VERBOSE
+  	printf("Using Binary Search to find each item in the Array. \n");
     for (i = 0; i < n; i++) {
         key = i * 2;
         printf("arr[%d]: %d\n", BinarySearch(&key, arr, n), arr[i]);
     }
     printf("\n");
+    #endif
+    
+    // test delete.
+    key = 30;
+    tmp = n - 1; // expected n to decrease after BinaryDelete
+    Assert(suite, BinaryDelete(&key, arr, &n) == 15);
+    Equals(suite, n, tmp);
+    Assert(suite, BinaryDelete(&key, arr, &n) == -1);
+    
+    // test insert, check if duplication is prohibited.
+    tmp = n;
+    for (i = 0; i < n; i++) {
+        #if VERBOSE
+        printf("arr[%d]: %d\n", i, arr[i]);
+        #endif
+        key = arr[i];
+        if (BinaryInsert(&key, arr, &n, MAX) > -1) {
+            #if VERBOSE
+            printf("Insertion failed. Allowed to insert duplicate. \n");
+            #endif
+        }
+    }
+    Equals(suite, tmp, n);
+    
+    // test insert, do insert.
+    tmp = n + 3;
+
+    key = 1;
+    Equals(suite, BinaryInsert(&key, arr, &n, MAX), 1);    
+
+    key = 19;
+    Equals(suite, BinaryInsert(&key, arr, &n, MAX), 11);
+
+    key = 50;
+    Equals(suite, BinaryInsert(&key, arr, &n, MAX), 21);
+
+    Assert(suite, tmp == n);
+
+    #if VERBOSE
+    printf("\n");
+    for (i = 0; i < n; i++) {
+        printf("arr[%d]: %d\n", i, arr[i]);
+    }
     #endif
 }
 
@@ -88,7 +136,7 @@ static void testLinearSearch(Suite *suite) {
 	Equals(suite, kindex, 2);
 	
 	#if VERBOSE
-	printf("Key: %d, Key Index was: %d\n", key, kindex);
+	printf("\nKey: %d, Key Index was: %d\n", key, kindex);
 	#endif // VERBOSE
 			
 	// test LinearDelete.
