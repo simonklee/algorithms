@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <citrus.h>
+#include <sys/types.h>
 #include "linearsearch.h"
 #include "binarysearch.h"
 
@@ -18,6 +19,7 @@ int main(int argc, char *argv[]) {
 	suite = malloc(sizeof (Suite *));
 	memset(suite, 0, sizeof *suite);
 	
+	//printf("%d\n", SSIZE_MAX);
 	#if VERBOSE
   	printf("Verbose is set to true and will Print messages during test. \n");
     #endif

@@ -47,7 +47,7 @@ int BinaryDelete(int *key, int *base, int *n) {
     return index;
 }
 
-// 
+// Insert into ordered Array with O(log n) lookup and O(n/2) insertion.
 int BinaryInsert(int *key, int *base, int *n, int MAX) {
     int min = 0, max = *n, mid;
     
