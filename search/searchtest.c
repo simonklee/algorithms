@@ -5,12 +5,14 @@
 #include <sys/types.h>
 #include "linearsearch.h"
 #include "binarysearch.h"
+#include "binarysearch-g.h"
 
 #define MAX 50
 #define VERBOSE 0
 
 static void testLinearSearch(Suite *suite);
 static void testBinarySearch(Suite *suite);
+static void testBinarySearchG(Suite *suite); 
 
 int main(int argc, char *argv[]) {
 	Suite *suite;
@@ -27,6 +29,7 @@ int main(int argc, char *argv[]) {
 	// run tests.
 	testLinearSearch(suite);
 	testBinarySearch(suite);
+	testBinarySearchG(suite);
 	
 	// view summary.
 	Summary(suite);
@@ -34,6 +37,29 @@ int main(int argc, char *argv[]) {
 	// clean end.
 	free(suite);
 	return 0;
+}
+
+static void testBinarySearchG(Suite *suite) {
+    int *res;
+    int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};  
+    char *arr2[] = {"ABC", "DEF", "GHI", "JKL", "MNS", "OPQ", "RST", "UVW", "XYZ"};
+  
+    // The Important tests. Does it work?
+    void *result = BinarySearchG(&arr2[2], arr2, 9, sizeof(char *), StringCompare);
+    void *result2 = BinarySearchG(&arr[2], arr, 10, sizeof(int), IntegerCompare);
+    
+    Assert(suite, *(char **)result == "GHI");
+    Assert(suite, *(int *)result2 == 2);
+
+    #if VERBOSE
+    printf("Char * Array results:\n");
+    printf("expected: %p,\t%s\n", &arr2[2], arr2[2]);    
+    printf("result:   %p,\t%s\n\n", result, *(char **)result);
+
+    printf("Int Array results:\n");
+    printf("expected: %p,\t%d\n", &arr[2], arr[2]);    
+    printf("result:   %p,\t%d\n\n", result2, *(int *)result2);
+    #endif   
 }
 
 static void testBinarySearch(Suite *suite) {
