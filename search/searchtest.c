@@ -40,16 +40,22 @@ int main(int argc, char *argv[]) {
 }
 
 static void testBinarySearchG(Suite *suite) {
-    int *res;
     int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};  
     char *arr2[] = {"ABC", "DEF", "GHI", "JKL", "MNS", "OPQ", "RST", "UVW", "XYZ"};
-  
+    char *nothere = "Not In Array";
+    
+    #if VERBOSE
+    printf("Testing BinarySearchG\n\n");
+    #endif
+    
     // The Important tests. Does it work?
     void *result = BinarySearchG(&arr2[2], arr2, 9, sizeof(char *), StringCompare);
     void *result2 = BinarySearchG(&arr[2], arr, 10, sizeof(int), IntegerCompare);
+    void *result3 = BinarySearchG(&nothere, arr2, 9, sizeof(char *), StringCompare);
     
     Assert(suite, *(char **)result == "GHI");
     Assert(suite, *(int *)result2 == 2);
+    Assert(suite, result3 == NULL);
 
     #if VERBOSE
     printf("Char * Array results:\n");
