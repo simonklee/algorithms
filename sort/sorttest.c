@@ -3,9 +3,9 @@
 #include <string.h>
 #include <citrus.h>
 #include "bubblesort.h"
+#include "utils.h"
 
 static void testBubbleSort(Suite *suite);
-static void printIntArray(int *arr, int n);
 
 int main(int argc, char **argv) {
     Suite *suite;
@@ -27,9 +27,8 @@ int main(int argc, char **argv) {
 
 #define N 10
 static void testBubbleSort(Suite *suite) {
-    //int n = 10;
-    int arr[N] = {73, 19, 29, 20, 57, 1, 8, 99, 4, 28};
-    int i;
+    int arr[N];
+    randomize(arr, N);
     
     printf("Unsorted Array\n");    
     printIntArray(arr, N);
@@ -37,15 +36,24 @@ static void testBubbleSort(Suite *suite) {
     BubbleSort(arr, N);
     printf("Sorted Array\n");
     printIntArray(arr, N);
+    
+    // Bubble Sort on N 100,000 int's
+    // real	1m40.271s
+    // user	1m40.167s
+    // sys	0m0.027s
+    
+    randomize(arr, N);
+    printf("Unsorted Array\n");
+    printIntArray(arr, N);
+    
+    SelectionSort(arr, N);
+    printf("Sorted Array\n");
+    printIntArray(arr, N);
+    
+    // Selection Sort on N 100,000 int's
+    // real	0m31.698s
+    // user	0m31.691s
+    // sys	0m0.007s
+
 }
 
-static void printIntArray(int *arr, int n) {
-    int i;
-    for (i = 0; i < n; i++) {
-        printf("%d", arr[i]);
-        if (i == (n-1))
-            printf("\n");
-        else
-            printf(", ");        
-    }    
-}
