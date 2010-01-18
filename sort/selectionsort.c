@@ -5,11 +5,11 @@
 void SelectionSort(int *base, int n) {
     int i, j;
     int *low;
-    for (i = 0; i < n; i++) {
+    for (i = 0; i < (n - 1); i++) {
         low = &base[i];
-        for (j = i; j < n; j++) {
-            if (*low > base[j])
-                low = &base[j];
+        for (j = (i + 1); j < n; j++) {
+            if (*low > base[j]) // compare value of lowest with j
+                low = &base[j]; // set value address of j to 
         }
         swap(&base[i], low);
     }

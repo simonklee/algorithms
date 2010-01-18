@@ -3,9 +3,13 @@
 #include <string.h>
 #include <citrus.h>
 #include "bubblesort.h"
+#include "selectionsort.h"
 #include "utils.h"
 
-static void testBubbleSort(Suite *suite);
+#define VERBOSE 0
+#define N 10000
+
+static void testSort(const char *name, void (sort)(int *base, int n));
 
 int main(int argc, char **argv) {
     Suite *suite;
@@ -15,7 +19,8 @@ int main(int argc, char **argv) {
     memset(suite, 0, sizeof *suite);
     
     // run tests.
-    testBubbleSort(suite);
+    testSort("Bubble Sort", BubbleSort);
+    testSort("Selection Sort", SelectionSort);
     
     // view summary.
     Summary(suite);
@@ -25,35 +30,28 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-#define N 10
-static void testBubbleSort(Suite *suite) {
+// function to test sorting int arrays.
+static void testSort(const char *name, void (sort)(int *base, int n)) {
     int arr[N];
+    double elapsed;
     randomize(arr, N);
     
+    printf("Test for %s:\n", name);
+    
+    #if VERBOSE
     printf("Unsorted Array\n");    
     printIntArray(arr, N);
+    #endif    
     
-    BubbleSort(arr, N);
-    printf("Sorted Array\n");
+    timer(); // Start timer.
+    sort(arr, N);
+    elapsed = timer(); // Stop timer.
+    
+    #if VERBOSE
+    printf("Sorted Array\n");    
     printIntArray(arr, N);
+    #endif
     
-    // Bubble Sort on N 100,000 int's
-    // real	1m40.271s
-    // user	1m40.167s
-    // sys	0m0.027s
-    
-    randomize(arr, N);
-    printf("Unsorted Array\n");
-    printIntArray(arr, N);
-    
-    SelectionSort(arr, N);
-    printf("Sorted Array\n");
-    printIntArray(arr, N);
-    
-    // Selection Sort on N 100,000 int's
-    // real	0m31.698s
-    // user	0m31.691s
-    // sys	0m0.007s
-
+    printTime(elapsed);
+    printf("\n");
 }
-
