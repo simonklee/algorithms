@@ -1,4 +1,4 @@
-#include "utils.h" // includes swap function.
+#include "utils.h"
 
 // Selection sort. O(N^2) comparisons and O(N-1) swaps. Overall effiency is
 // O(N^2). So this is still very slow. 
