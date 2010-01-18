@@ -13,7 +13,7 @@ DUMPTRG=$(PROJECTNAME).s
 OBJDUMP=objdump
 
 # C flags
-CFLAGS=-Wall -L/opt/lib -lcitrus
+CFLAGS=-Wall -L/opt/lib -lcitrus -std=c99
 
 # Sourcefiles
 CFILES=$(filter %.c, $(PRJSRC))

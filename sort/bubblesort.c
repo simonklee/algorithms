@@ -1,4 +1,4 @@
-static int swap(int *a, int *b);
+#include "utils.h"
 
 void BubbleSort(int *base, int n) {
     int i, j;
@@ -14,8 +14,3 @@ void BubbleSort(int *base, int n) {
     }
 }
 
-static int swap(int *a, int *b) {
-    int tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
