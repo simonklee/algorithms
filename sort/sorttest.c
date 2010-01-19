@@ -31,9 +31,9 @@ static void testSort(const char *name, void (sort)(int *base, int n)) {
     int arr[N];
     double elapsed;
     randomize(arr, N);
-    
+
     printf("Test for %s:\n", name);
-    
+
     #if VERBOSE
     printf("Unsorted Array\n");    
     printIntArray(arr, N);
@@ -46,6 +46,7 @@ static void testSort(const char *name, void (sort)(int *base, int n)) {
     #if VERBOSE
     printf("Sorted Array\n");    
     printIntArray(arr, N);
+
     int n = (int) N;
     delDups(arr, &n);
     printf("Sorted Array without duplicates\n");    
@@ -54,6 +55,7 @@ static void testSort(const char *name, void (sort)(int *base, int n)) {
     
     printTime(elapsed);
     printf("\n");
+
 }
 
 static void delDups(int *base, int *n) {
@@ -82,5 +84,5 @@ static void OddEvenSort(int *base, int n) {
 }
 
 void compEqual(int a, int b) {
-    
+    // nothing yet.
 }
