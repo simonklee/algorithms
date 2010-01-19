@@ -1,5 +1,7 @@
-static int swap(int *a, int *b);
+#include "utils.h"
 
+// O(N^2) efficiency and substantional slower then Selections Sort due to less
+// swapping.
 void BubbleSort(int *base, int n) {
     int i, j;
     for (i = (n - 1); i > 1; i--) {
@@ -14,8 +16,3 @@ void BubbleSort(int *base, int n) {
     }
 }
 
-static int swap(int *a, int *b) {
-    int tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
