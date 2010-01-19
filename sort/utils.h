@@ -1,8 +1,15 @@
 #ifndef __UTILS_H
 #define __UTILS_H
 
+#include <sys/types.h>
+
 // Swap integers
 int swap(int *a, int *b);
+void SwapG(void **a, void **b);
+
+// Generic compare functions.
+int IntegerCompare(const void *a, const void *b);
+int StringCompare(const void *a, const void *b);
 
 // Initialize a int array with N random numbers.
 void randomize(int *base, int n);

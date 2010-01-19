@@ -14,16 +14,30 @@
 static void testSort(const char *name, void (sort)(int *base, int n));
 static void delDups(int *base, int *n);
 static void OddEvenSort(int *base, int n);
+static void testUtil();
 
 int main(int argc, char **argv) {
  
     // run tests.
-    testSort("Bubble Sort", BubbleSort);
+    /*testSort("Bubble Sort", BubbleSort);
     testSort("Selection Sort", SelectionSort);
     testSort("OddEven Sort", OddEvenSort);
-    testSort("Insertion Sort", InsertionSort);
-
+    testSort("Insertion Sort", InsertionSort);*/
+    testUtil();
+    
     return 0;
+}
+
+// Util test function.
+static void testUtil() {
+    int a = 10;
+    int b = 20;
+    int *aptr = &a;
+    int *bptr = &b;
+    printf("before: a = %d b = %d\n", *aptr, *bptr); 
+    SwapG((void **)&aptr, (void **)&bptr);
+    printf("after: a = %d b = %d\n", *aptr, *bptr);
+    
 }
 
 // Function to test sorting int arrays.

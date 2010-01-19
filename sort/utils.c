@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include <sys/types.h>
 #include "utils.h"
 
 // Swap two int vars.
@@ -8,6 +10,26 @@ int swap(int *a, int *b) {
     int tmp = *a;
     *a = *b;
     *b = tmp;
+}
+
+// Generic Swap function.
+void SwapG(void **a, void **b) {
+    void *tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+// Generic compare functions.
+int IntegerCompare(const void *a, const void *b) {
+    int *aptr = (int *)a;
+    int *bptr = (int *)b;
+    return *aptr - *bptr; 
+}
+
+int StringCompare(const void *a, const void *b) {
+    char *aptr = *(char **)a;
+    char *bptr = *(char **)b;
+    return strcmp(aptr, bptr);
 }
 
 // Randomize int array with n numbers
