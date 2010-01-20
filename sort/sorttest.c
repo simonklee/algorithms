@@ -13,38 +13,48 @@
 // Function to test sorting int arrays.
 static void testSort(const char *name, void (sort)(int *base, int n));
 static void delDups(int *base, int *n);
-static void OddEvenSort(int *base, int n);
 static void testUtil();
 
 int main(int argc, char **argv) {
  
     // run tests.
-    /*testSort("Bubble Sort", BubbleSort);
+    testSort("Bubble Sort", BubbleSort);
     testSort("Selection Sort", SelectionSort);
     testSort("OddEven Sort", OddEvenSort);
-    testSort("Insertion Sort", InsertionSort);*/
+    testSort("Insertion Sort", InsertionSort);
     testUtil();
     
     return 0;
 }
 
 // Util test function.
-static void testUtil() {
-    int a = 10;
-    int b = 20;
-    int *aptr = &a;
-    int *bptr = &b;
-    printf("before: a = %d b = %d\n", *aptr, *bptr); 
-    SwapG((void **)&aptr, (void **)&bptr);
-    printf("after: a = %d b = %d\n", *aptr, *bptr);
+static void testUtil() { 
+	printf("Testing Swapping:\n");
+    int intA = 10;
+    int intB = 20;        
+    printf("before: a = %d b = %d\n", intA, intB);
+    SwapValue(&intA, &intB, sizeof(int));
+    printf("after: a = %d b = %d\n", intA, intB);
     
+    char chA = 'A';
+    char chB = 'B';
+    printf("before: a = %c b = %c\n", chA, chB);
+    SwapValue(&chA, &chB, sizeof(char));
+    printf("after: a = %c b = %c\n", chA, chB);    
+    
+    char *charA = "Hello";
+    char *charB = "World!";    
+    printf("before: %s %s\n", charA, charB);    
+    SwapValue(&charA, &charB, sizeof(char *));
+    printf("after: %s %s\n", charA, charB);        
+	printf("Done testing Swapping.\n");
 }
 
 // Function to test sorting int arrays.
 static void testSort(const char *name, void (sort)(int *base, int n)) {
     int arr[N];
     double elapsed;
-    randomize(arr, N);
+    Randomize(arr, N);
 
     printf("Test for %s:\n", name);
 
@@ -53,9 +63,9 @@ static void testSort(const char *name, void (sort)(int *base, int n)) {
     printIntArray(arr, N);
     #endif    
     
-    timer(); // Start timer.
+    Timer(); // Start timer.
     sort(arr, N);
-    elapsed = timer(); // Stop timer.
+    elapsed = Timer(); // Stop timer.
     
     #if VERBOSE
     printf("Sorted Array\n");    
@@ -67,7 +77,7 @@ static void testSort(const char *name, void (sort)(int *base, int n)) {
     printIntArray(arr, n);    
     #endif
     
-    printTime(elapsed);
+    PrintTime(elapsed);
     printf("\n");
 
 }
@@ -80,21 +90,6 @@ static void delDups(int *base, int *n) {
             base[curr] = base[i];
     }
     *n = (curr + 1);
-}
-
-
-static void OddEvenSort(int *base, int n) {
-    int j, i;   
-    for (i = 0; i < ((n + 1)/2); i++) {
-        for (j = 0; j < (n-1); j += 2) {
-            if (base[j] > base[j + 1])
-                swap(&base[j], &base[j+1]);
-        } 
-        for (j = 1; j < (n-1); j += 2) {
-            if (base[j] > base[j+1])
-                swap(&base[j], &base[j+1]);
-        }
-    }
 }
 
 void compEqual(int a, int b) {

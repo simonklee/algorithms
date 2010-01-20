@@ -3,20 +3,32 @@
 #include <time.h>
 #include <string.h>
 #include <sys/types.h>
+
 #include "utils.h"
 
 // Swap two int vars.
-int swap(int *a, int *b) {
+int SwapInt(int *a, int *b) {
     int tmp = *a;
     *a = *b;
     *b = tmp;
 }
 
-// Generic Swap function.
-void SwapG(void **a, void **b) {
+// This function works for pointer/address swapping. 
+void SwapAddress(void **a, void **b) {
     void *tmp = *a;
     *a = *b;
     *b = tmp;
+}
+
+// Not sure about the effiency of this function, but it seems to work well.
+// Should do more testing to see if it's bullet proof or if it is a big overhead
+// in swapping intensive algorithms. 
+void SwapValue(void *aAddr, void *bAddr, int elemSize) {
+    void *target = malloc((*(char*)aAddr + 0) * elemSize);	
+    *(char *)target = *(char *)aAddr;
+    *(char *)aAddr = *(char *)bAddr;
+    *(char *)bAddr = *(char *)target;
+    free(target);
 }
 
 // Generic compare functions.
@@ -33,7 +45,7 @@ int StringCompare(const void *a, const void *b) {
 }
 
 // Randomize int array with n numbers
-void randomize(int *base, int n) {
+void Randomize(int *base, int n) {
     int i;
     for (i = 0; i < n; i++) {
         base[i] = (rand() / 10000000);
@@ -41,7 +53,7 @@ void randomize(int *base, int n) {
 }
 
 // Print integer arrays in a linear line. add breakline at last item.
-void printIntArray(int *arr, int n) {
+void PrintIntArray(int *arr, int n) {
     int i;
     for (i = 0; i < n; i++) {
         printf("%d", arr[i]);
@@ -56,7 +68,7 @@ void printIntArray(int *arr, int n) {
 // Timer, like a stop watch. Click it once, it starts. Click it a second time,
 // it stops at a given time. This time is then returned. The first time 0.0 is
 // returned.
-double timer() {
+double Timer() {
     // just a logic button to see what to do based on if we have clicked or not.
     static int t;
     // clock_t is used to store the elapsed CPU time by a process
@@ -75,7 +87,7 @@ double timer() {
 }
 
 // Just a function to print time in min and seconds
-void printTime(double time) {
+void PrintTime(double time) {
     int min = 0;
     while(time >= 60) {
         time -= 60;

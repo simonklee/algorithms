@@ -11,6 +11,6 @@ void SelectionSort(int *base, int n) {
             if (*low > base[j]) // compare value of lowest with j
                 low = &base[j]; // set value address of j to 
         }
-        swap(&base[i], low);
+        SwapInt(&base[i], low);
     }
 } 
