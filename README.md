@@ -10,7 +10,7 @@ at the University of Agder.
 Getting Started
 ---------------
 
-*   `$ git clone git@github.com:simonz05/algorithms.git`
+*   `$ git clone git://github.com/simonz05/algorithms.git`
 *   Use `$ make` to test different algorithms.
 *   Storage; queue, linked-list etc. depends on [Go] (http://golang.org)
 *   Sort & Search; Sorting algorithms currently have only C (gcc) deps.
