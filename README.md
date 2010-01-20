@@ -9,17 +9,16 @@ at the University of Agder.
 
 Getting Started
 ---------------
-1. git clone git@github.com:simonz05/algorithms.git
-2. Use $ make to test different algorithms.
-3. Dependencies.
-3.1. Storage; queue, linked-list etc. depends on Go (golang.org)
-3.2. Sort & Search; Sorting algorithms currently have only C (gcc) deps.
-     Searching test file is using citrus(github.com/simonz05/citrus). Both
-     sorting and searching makefile depend on having citrus installed as
-     shared lib.
-      
-     It's of course possible to build these algorithms without the citrus
-     dependency.
+*   git clone git@github.com:simonz05/algorithms.git
+*   Use $ make to test different algorithms.
+*   Storage; queue, linked-list etc. depends on Go (golang.org)
+*   Sort & Search; Sorting algorithms currently have only C (gcc) deps.
+    Searching test file is using citrus(github.com/simonz05/citrus). Both
+    sorting and searching makefile depend on having citrus installed as
+    shared lib.
+         
+    It's of course possible to build these algorithms without the citrus
+    dependency.
   
 
 License
