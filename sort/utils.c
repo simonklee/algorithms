@@ -52,6 +52,22 @@ void Randomize(int *base, int n) {
     } 
 }
 
+// Delete duplicates in an ordered array.
+void DelDups(int *base, int *n) {
+    int i, curr = 0;
+    for (i = 1; i < *n; i++) {
+        if (base[i] != base[curr])
+            curr++;
+            base[curr] = base[i];
+    }
+    *n = (curr + 1);
+}
+
+// not implementented.
+void compEqual(int a, int b) {
+    // nothing yet.
+}
+
 // Print integer arrays in a linear line. add breakline at last item.
 void PrintIntArray(int *arr, int n) {
     int i;

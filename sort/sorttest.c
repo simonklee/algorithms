@@ -12,7 +12,6 @@
 
 // Function to test sorting int arrays.
 static void testSort(const char *name, void (sort)(int *base, int n));
-static void delDups(int *base, int *n);
 static void testUtil();
 
 int main(int argc, char **argv) {
@@ -29,7 +28,8 @@ int main(int argc, char **argv) {
 
 // Util test function.
 static void testUtil() { 
-	printf("Testing Swapping:\n");
+    printf("Testing Swapping:\n");
+    
     int intA = 10;
     int intB = 20;        
     printf("before: a = %d b = %d\n", intA, intB);
@@ -47,7 +47,8 @@ static void testUtil() {
     printf("before: %s %s\n", charA, charB);    
     SwapValue(&charA, &charB, sizeof(char *));
     printf("after: %s %s\n", charA, charB);        
-	printf("Done testing Swapping.\n");
+    
+    printf("Done testing Swapping.\n");
 }
 
 // Function to test sorting int arrays.
@@ -72,26 +73,11 @@ static void testSort(const char *name, void (sort)(int *base, int n)) {
     printIntArray(arr, N);
 
     int n = (int) N;
-    delDups(arr, &n);
+    DelDups(arr, &n);
     printf("Sorted Array without duplicates\n");    
     printIntArray(arr, n);    
     #endif
     
     PrintTime(elapsed);
     printf("\n");
-
-}
-
-static void delDups(int *base, int *n) {
-    int i, curr = 0;
-    for (i = 1; i < *n; i++) {
-        if (base[i] != base[curr])
-            curr++;
-            base[curr] = base[i];
-    }
-    *n = (curr + 1);
-}
-
-void compEqual(int a, int b) {
-    // nothing yet.
 }

@@ -3,7 +3,7 @@
 
 #include <sys/types.h>
 
-// Swap integers
+// Swap values, addresses etc.
 int SwapInt(int *a, int *b);
 void SwapAddress(void **a, void **b);
 void SwapValue(void *aAddr, void *bAddr, int elemSize);
@@ -14,6 +14,9 @@ int StringCompare(const void *a, const void *b);
 
 // Initialize a int array with N random numbers.
 void Randomize(int *base, int n);
+
+// Delete duplicates in an ordered array.
+void DelDups(int *base, int *n);
 
 // Print a int array with N numbers.
 void PrintIntArray(int *arr, int n);
