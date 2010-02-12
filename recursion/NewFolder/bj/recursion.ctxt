@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.params=arr\ n
+comment0.target=int\ loop(int[],\ int)
+comment1.target=void\ loopTest()
+numComments=2

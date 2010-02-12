@@ -1,0 +1,34 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use File::Spec;
+
+if (@ARGV != 1) {
+    die "Usage: $0 proj\n"
+}
+
+my $proj = shift @ARGV;
+
+#mkdir $proj;
+#chdir $proj;
+
+
+write_file("${proj}.java", <<"...");
+public class $proj {
+    
+    public $proj() {
+    
+    }
+    
+    public static void main(String []args) {
+    
+    }
+}
+...
+
+sub write_file {
+    my ($fname, $content) = @_;
+    open my $fh, '>', $fname or die "$fname: $!";
+    print $fh $content;
+    close $fh;
+}
