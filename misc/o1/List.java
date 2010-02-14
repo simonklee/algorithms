@@ -3,7 +3,7 @@
  * http://golang.org/pkg/container/list/
  */
 
-public class List<T> {
+public class List {
     private int len;
     private Node first;
     private Node last;
@@ -37,7 +37,7 @@ public class List<T> {
     }
     
     /** Push adds a new node to the front of the list. */
-    public <T> void Push(T data) {
+    public void Push(int data) {
         Node node = newNode(null, null, data);
         if (IsEmpty()) {
             first = node;
@@ -72,13 +72,13 @@ public class List<T> {
     }
     
     /** Insert a new node after marked node in List. */
-    public <T> void InsertAfter(T data, Node mark) {
+    public void InsertAfter(int data, Node mark) {
         Node n = newNode(null, null, data);
         InsertAfter(n, mark);
     }
     
     /** Insert a new node before marked node in List. */
-    public <T> void InsertBefore(T data, Node mark) {
+    public void InsertBefore(int data, Node mark) {
         Node n = newNode(null, null, data);
         InsertBefore(n, mark);
     }    
@@ -120,7 +120,7 @@ public class List<T> {
     }
     
     /** @return return a new node. */
-    private <T> Node newNode(Node next, Node prev, T data) {
+    private Node newNode(Node next, Node prev, int data) {
         return new Node(next, prev, data);
     }
     

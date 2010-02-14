@@ -13,7 +13,7 @@ DUMPTRG=$(PROJECTNAME).s
 OBJDUMP=objdump
 
 # C flags
-CFLAGS=-Wall -L/opt/lib -lcitrus -std=c99
+CFLAGS=-g -Wall -L/opt/lib -lcitrus -std=c99
 
 # Sourcefiles
 CFILES=$(filter %.c, $(PRJSRC))
@@ -44,7 +44,7 @@ $(DUMPTRG): $(TRG)
 
 # object from C
 .c.o: 
-	$(CC) -c $< -o $@
+	$(CC) $(CFLAGS)  -c $< -o $@
 
 # Clean the house.
 clean:

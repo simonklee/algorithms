@@ -1,9 +1,9 @@
-public class Node<T> {
+public class Node {
     private Node prev;
     private Node next;
-    private T data;
+    private int data;
     
-    public Node(Node next, Node prev, T data) {
+    public Node(Node next, Node prev, int data) {
         this.next = next;
         this.prev = prev;
         this.data = data;
@@ -25,7 +25,7 @@ public class Node<T> {
         prev = node;
     }
     
-    public T Data() {
+    public int Data() {
         return data;
     }
 }

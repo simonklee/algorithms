@@ -4,7 +4,7 @@
 #include <sys/types.h>
 
 // Swap values, addresses etc.
-int SwapInt(int *a, int *b);
+void SwapInt(int *a, int *b);
 void SwapAddress(void **a, void **b);
 void SwapValue(void *aAddr, void *bAddr, int elemSize);
 

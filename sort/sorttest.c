@@ -8,7 +8,7 @@
 #include "utils.h"
 
 #define VERBOSE 0
-#define N 50000
+#define N 10
 
 // Function to test sorting int arrays.
 static void testSort(const char *name, void (sort)(int *base, int n));
@@ -17,10 +17,10 @@ static void testUtil();
 int main(int argc, char **argv) {
  
     // run tests.
-    testSort("Bubble Sort", BubbleSort);
-    testSort("Selection Sort", SelectionSort);
-    testSort("OddEven Sort", OddEvenSort);
-    testSort("Insertion Sort", InsertionSort);
+    //testSort("Bubble Sort", BubbleSort);
+    //testSort("Selection Sort", SelectionSort);
+    //testSort("OddEven Sort", OddEvenSort);
+    //testSort("Insertion Sort", InsertionSort);
     testUtil();
     
     return 0;
@@ -33,19 +33,30 @@ static void testUtil() {
     int intA = 10;
     int intB = 20;        
     printf("before: a = %d b = %d\n", intA, intB);
-    SwapValue(&intA, &intB, sizeof(int));
+    int i;
+    Timer(); 
+    for (i = 0; i < N; i++) {
+        SwapValue(&intA, &intB, sizeof(int));
+    }
+    PrintTime(Timer());    
     printf("after: a = %d b = %d\n", intA, intB);
     
     char chA = 'A';
     char chB = 'B';
     printf("before: a = %c b = %c\n", chA, chB);
-    SwapValue(&chA, &chB, sizeof(char));
+    Timer(); 
+    for (i = 0; i < N; i++) {
+        SwapValue(&chA, &chB, sizeof(char));
+    }
+    PrintTime(Timer());
     printf("after: a = %c b = %c\n", chA, chB);    
     
     char *charA = "Hello";
     char *charB = "World!";    
-    printf("before: %s %s\n", charA, charB);    
+    printf("before: %s %s\n", charA, charB);
+    Timer(); 
     SwapValue(&charA, &charB, sizeof(char *));
+    PrintTime(Timer());
     printf("after: %s %s\n", charA, charB);        
     
     printf("Done testing Swapping.\n");
