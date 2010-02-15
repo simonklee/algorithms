@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=SortListTest()
+comment1.params=amount
+comment1.target=void\ fillInt(int)
+comment2.params=amount
+comment2.target=void\ fillStr(int)
+comment3.target=String\ getRandomString()
+comment3.text=\nTakes\ a\ random\ ascii\ character\ and\ adds\ it\ to\ a\ string\ \n@return\ s\ \ s\ is\ a\ random\ lowercase\ string\ generated\ by\ this\ little\ script\n\n
+numComments=4

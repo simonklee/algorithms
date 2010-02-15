@@ -3,13 +3,14 @@ public class recursion
 {
     public static int loop(int []arr, int n) {        
         if (n < arr.length) { 
-            System.out.println("arr["+ n +"] found " + loop(arr, ++n));
+            System.out.println("arr["+ n +"] found " + arr[n]);
+            return loop(arr, ++n);
         }
-        return n * 2;
+        return 0;
     }
     
     public static void loopTest() {
-        int []a = {1, 2, 3, 4, 5, 6, 7};
+        int []a = {1, 2, 3};
         loop(a, 0);
     }
 }
