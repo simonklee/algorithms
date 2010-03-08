@@ -47,14 +47,14 @@ func (l *List) InitList() *List {
 // Used to create a new list and set it to zero.
 func NewList() *List {
     return new(List).InitList()
-} 
+}
 
-// Return the first node in a list or nil. 
+// Return the first node in a list or nil.
 func (l *List) First() *Node{
     return l.first
 }
 
-// Return the last node in a list or nil. 
+// Return the last node in a list or nil.
 func (l *List) Last() *Node{
     return l.last
 }
@@ -64,7 +64,7 @@ func (l *List) IsEmpty() bool {
     if l.Len() == 0 {
         return true
     }
-    return false  
+    return false
 }
 
 // Return the number of list items.
@@ -79,7 +79,7 @@ func (l *List) InsertLast(data int) *Node {
     if l.IsEmpty() {
         l.first = newNode
     } else {
-        l.last.next = newNode        
+        l.last.next = newNode
     }
     l.last = newNode
     l.len += 1
@@ -89,12 +89,12 @@ func (l *List) InsertLast(data int) *Node {
 // Delete first item in the list, return the data.
 func (l *List) DeleteFirst() int {
     tmp := l.first.nodeValue()
-    
+
     // we only have one item in the list
     if l.first.next == nil {
         l.last = nil
     }
-    
+
     // set the first node in the list to the next.
     l.first = l.first.next
     l.len -= 1
@@ -108,22 +108,22 @@ func main() {
     if list.IsEmpty() {
         fmt.Print("is empty\n")
     }
-    
+
     list.InsertLast(2)
     fmt.Printf("Last value: %d, len: %d\n", list.first.nodeValue(), list.Len())
-    
+
     val := list.DeleteFirst()
     fmt.Printf("Last value was: %d, len: %d\n", val, list.Len())
-    
+
     list.InsertLast(5)
     list.InsertLast(4)
     list.InsertLast(3)
     list.InsertLast(2)
-    list.InsertLast(1)    
+    list.InsertLast(1)
     fmt.Printf("Last value: %d, len: %d\n", list.last.nodeValue(), list.Len())
-    fmt.Printf("First value: %d, len: %d\n", list.first.nodeValue(), list.Len())   
-    
-    list.DeleteFirst()     
+    fmt.Printf("First value: %d, len: %d\n", list.first.nodeValue(), list.Len())
+
+    list.DeleteFirst()
     fmt.Printf("Last value: %d, len: %d\n", list.last.nodeValue(), list.Len())
-    fmt.Printf("First value: %d, len: %d\n", list.first.nodeValue(), list.Len())       
+    fmt.Printf("First value: %d, len: %d\n", list.first.nodeValue(), list.Len())
 }*/

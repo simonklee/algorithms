@@ -12,7 +12,7 @@ static void shiftRight(int *base, int n, int l);
 int LinearSearch(int *key, int *base, int n) {
 	int i;
 	for (i = 0; i < n; i++) {
-		if (base[i] == *key) 
+		if (base[i] == *key)
 			return i;
 	}
 	return -1;
@@ -41,24 +41,24 @@ void LinearDelete(int *key, int *base, int *n) {
 int LinearSearchS(int *key, int *base, int n) {
 	int i;
 	for (i = 0; i < n; i++) {
-		if (base[i] == *key) 
+		if (base[i] == *key)
 			return i;
 		else if (base[i] > *key)
 			return -1;
-	}	
-	return -1;	
+	}
+	return -1;
 }
 
 // insertion of sorted array, insert in correct location. O(N)
 void LinearInsertS(int *key, int *base, int *n, int max) {
 	int i, j;
-	
+
 	// check array boundary.
 	if (*n < max) {
 	    // find insertion spot in the sorted array.
         for (i = 0; i < *n; i++) {
             // if key is less then base we know that i is the insertion point.
-            if (*key < base[i]) { 
+            if (*key < base[i]) {
                 break;
             }
         }

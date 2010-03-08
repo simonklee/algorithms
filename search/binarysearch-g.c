@@ -7,7 +7,7 @@
 int IntegerCompare(const void *a, const void *b) {
     int *aptr = (int *)a;
     int *bptr = (int *)b;
-    return *aptr - *bptr; 
+    return *aptr - *bptr;
 }
 
 int StringCompare(const void *a, const void *b) {
@@ -29,8 +29,8 @@ void *BinarySearchG(const void *key, const void *base,
             min = mid + 1;
         else if (compar(base + mid * size, key) > 0)
             max = mid - 1;
-        else 
+        else
             return (void *)base + mid * size; // return address of key.
-    } 
+    }
     return NULL;
 }

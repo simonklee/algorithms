@@ -10,7 +10,7 @@ void BubbleSort(int *base, int n) {
                 // int tmp = base[j];
                 // base[j] = base[j + 1];
                 // base[j + 1] = tmp;
-                SwapInt(&base[j], &base[j + 1]); 
+                SwapInt(&base[j], &base[j + 1]);
             }
         }
     }
@@ -18,12 +18,12 @@ void BubbleSort(int *base, int n) {
 
 // OddEven sort is a variant of Bubblesort.
 void OddEvenSort(int *base, int n) {
-    int j, i;   
+    int j, i;
     for (i = 0; i < ((n + 1)/2); i++) {
         for (j = 0; j < (n-1); j += 2) {
             if (base[j] > base[j + 1])
                 SwapInt(&base[j], &base[j+1]);
-        } 
+        }
         for (j = 1; j < (n-1); j += 2) {
             if (base[j] > base[j+1])
                 SwapInt(&base[j], &base[j+1]);

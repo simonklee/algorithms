@@ -5,7 +5,7 @@
 #define N 10
 
 // Compare functions are needed since binary search function doesn't know
-// how to compare void *'s. 
+// how to compare void *'s.
 static void *Test(const void *key, const void *base,
                      size_t nmemb, size_t size,
                      int (*compar)(const void *, const void *));
@@ -13,7 +13,7 @@ static void *Test(const void *key, const void *base,
 static int intComp(const void *a, const void *b) {
     int *aptr = (int *)a;
     int *bptr = (int *)b;
-    return *aptr - *bptr; 
+    return *aptr - *bptr;
 }
 
 static int strComp(const void *a, const void *b) {
@@ -25,7 +25,7 @@ static int strComp(const void *a, const void *b) {
 int main(int argc, char **argv) {
     printf("Test intComp:\n");
     int a, b;
-      
+
     a = 1, b = 1;
     printf("intComp(%d, %d) == %d\n", a, b, intComp(&a, &b)); // 0
 
@@ -54,9 +54,9 @@ int main(int argc, char **argv) {
         printf("%d\n", *res);
     else printf("not found\n\n");
 
-    printf("Test BinarySearchG on char array:\n");    
+    printf("Test BinarySearchG on char array:\n");
     char *arr2[] = {"ABC", "DEF", "GHI", "JKL", "MNS", "OPQ", "RST", "UVW", "XYZ"};
-                     
+
     if ((res = BinarySearchG(arr2, arr2, 9, sizeof(char *), strComp)) != NULL)
         printf("%d\n", *res);
     else printf("not found\n");
@@ -73,11 +73,11 @@ int main(int argc, char **argv) {
 
     printf("Proof of concept: (char*)varr + 0 * elm_size == varr === ptr\n");
     // char * array
-    printf("%s,\t%s,\t%p,\t%p\n", *(char **)varr2 
+    printf("%s,\t%s,\t%p,\t%p\n", *(char **)varr2
                                 , *(char **)((char *) varr2 + 2 * elm_size2)
-                                , (char *)varr2 + 0 * elm_size2    
+                                , (char *)varr2 + 0 * elm_size2
                                 , (char *)varr2 + 2 * elm_size2);
-    // int array.          
+    // int array.
     printf("%d,\t%d,\t%p,\t%p\n\n", *(int *)varr
                                   , *(int *)((char *) varr + 0 * elm_size)
                                   , (char *)varr + 0 * elm_size
@@ -89,25 +89,25 @@ int main(int argc, char **argv) {
 
     #if VERBOSE
     printf("Char * Array results:\n");
-    printf("expected: %p,\t%s\n", &arr2[2], arr2[2]);    
+    printf("expected: %p,\t%s\n", &arr2[2], arr2[2]);
     printf("result:   %p,\t%s\n\n", result, *(char **)result);
 
     printf("Int Array results:\n");
-    printf("expected: %p,\t%d\n", &arr[2], arr[2]);    
+    printf("expected: %p,\t%d\n", &arr[2], arr[2]);
     printf("result:   %p,\t%d\n\n", result2, *(int *)result2);
-    #endif       
+    #endif
     return 0;
 }
 
 static void *Test(const void *key, const void *base,
                      size_t nmemb, size_t size,
                      int (*compar)(const void *, const void *)) {
-    
+
     void * f = ((char *) base + 2 * size);
     printf("%p\n", ((char *) base + 2 * size));
     printf("%p\n", ((char *) key));
     printf("%d\n", compar(base + 2 * size, key));
-    
+
     int min = 0, mid, max;
     max = (int) nmemb;
 
@@ -117,8 +117,8 @@ static void *Test(const void *key, const void *base,
             min = mid + 1;
         else if (compar(base + mid * size, key) > 0)
             max = mid - 1;
-        else 
+        else
             return (void *)base + mid * size; // return address of key.
-    } 
+    }
     return NULL;
 }

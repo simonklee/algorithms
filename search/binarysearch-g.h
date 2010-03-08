@@ -31,7 +31,7 @@ void *BinarySearchG(const void *key, const void *base,
             int (*compar)(const void *, const void *));
 
 // Compare functions are needed since binary search function doesn't know
-// how to compare void *'s. 
+// how to compare void *'s.
 
 int IntegerCompare(const void *a, const void *b);
 int StringCompare(const void *a, const void *b);

@@ -13,7 +13,7 @@ int SwapInt(int *a, int *b) {
     *b = tmp;
 }
 
-// This function works for pointer/address swapping. 
+// This function works for pointer/address swapping.
 void SwapAddress(void **a, void **b) {
     void *tmp = *a;
     *a = *b;
@@ -22,9 +22,9 @@ void SwapAddress(void **a, void **b) {
 
 // Not sure about the effiency of this function, but it seems to work well.
 // Should do more testing to see if it's bullet proof or if it is a big overhead
-// in swapping intensive algorithms. 
+// in swapping intensive algorithms.
 void SwapValue(void *aAddr, void *bAddr, int elemSize) {
-    void *target = malloc((*(char*)aAddr + 0) * elemSize);	
+    void *target = malloc((*(char*)aAddr + 0) * elemSize);
     *(char *)target = *(char *)aAddr;
     *(char *)aAddr = *(char *)bAddr;
     *(char *)bAddr = *(char *)target;
@@ -35,7 +35,7 @@ void SwapValue(void *aAddr, void *bAddr, int elemSize) {
 int IntegerCompare(const void *a, const void *b) {
     int *aptr = (int *)a;
     int *bptr = (int *)b;
-    return *aptr - *bptr; 
+    return *aptr - *bptr;
 }
 
 int StringCompare(const void *a, const void *b) {
@@ -49,7 +49,7 @@ void Randomize(int *base, int n) {
     int i;
     for (i = 0; i < n; i++) {
         base[i] = (rand() / 10000000);
-    } 
+    }
 }
 
 // Delete duplicates in an ordered array.
@@ -76,8 +76,8 @@ void PrintIntArray(int *arr, int n) {
         if (i == (n-1))
             printf("\n\n");
         else
-            printf(", ");        
-    }    
+            printf(", ");
+    }
 }
 
 
@@ -107,7 +107,7 @@ void PrintTime(double time) {
     int min = 0;
     while(time >= 60) {
         time -= 60;
-        min++;        
+        min++;
     }
-    printf("Elapsed time %dm%4.3fs\n", min, time); 
+    printf("Elapsed time %dm%4.3fs\n", min, time);
 }

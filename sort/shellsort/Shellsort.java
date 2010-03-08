@@ -2,12 +2,12 @@
 /**
  * A simple shell sort implementation using Knuth's intervals,
  * based on examples for Data Structrues & Algorithms in Java by
- * Robert Lafore. 
+ * Robert Lafore.
  *
  * @author  Simon Zimmermann
  */
 
-public class Shellsort {   
+public class Shellsort {
     private int[] array;
     private int n;
 
@@ -15,7 +15,7 @@ public class Shellsort {
         this.array = array;
         this.n = array.length;
     }
-    
+
     /**
      * Append to the end of the array.
      */
@@ -23,7 +23,7 @@ public class Shellsort {
         array[n] = data;
         n++;
     }
-    
+
     /**
      * @return Retrieve the last item in array or -1;
      */
@@ -34,7 +34,7 @@ public class Shellsort {
         }
         return -1;
     }
-    
+
     /**
      * Calculate gap using Knuth's sequence.
      */
@@ -43,19 +43,19 @@ public class Shellsort {
         while (h <= n/3) {
             h = (3 * h) + 1;
         }
-        return h; 
+        return h;
     }
-    
+
     /**
      * @return Reverse gap calculation based on Knuth's sequence.
      */
     private int nextGap(int h) {
         return (h - 1) / 3;
     }
-    
-    
+
+
     /**
-     * Perform shellsort on array. 
+     * Perform shellsort on array.
      */
     public void sort() {
         int h = calcGap();
@@ -65,7 +65,7 @@ public class Shellsort {
             for (outer = h; outer < n; outer++) {
                 tmp = array[outer];
                 inner = outer;
-                
+
                 while (inner - h >= 0 && array[inner - h] >= tmp) {
                     array[inner] = array[inner-h];
                     inner = inner - h;
@@ -75,11 +75,11 @@ public class Shellsort {
             h = nextGap(h);
         }
     }
-        
+
     // Get and set methods.
     public int getN() {return n;}
     public int[] getArray() {return array;}
-    
+
     public void setArray(int[] a) {
         this.array = a;
         this.n = array.length;
@@ -87,4 +87,4 @@ public class Shellsort {
 }
 
 
-    
+
