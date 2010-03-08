@@ -1,6 +1,6 @@
 
 public interface Iterator<T> {
-   
+
     //boolean hasNext();
     T next();
     //E previous();

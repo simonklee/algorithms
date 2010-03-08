@@ -3,20 +3,20 @@ import java.util.*;
 public class examples {
 
     public static int mult(int x, int y) {
-        if (y > 1) 
+        if (y > 1)
             return x + mult(x, y-1);
          else if (y < -1)
             return mult(x, y+1) - x;
          else
             return x;
-    }   
-    
+    }
+
     public static int choose(int m, List<String> cand) {
         List<String> team = new ArrayList<String>();
         select(team, cand, m);
         return 0;
     }
-    
+
     private static void select(List<String> selected, List<String> cand, int m) {
         if (m == 0) {
             System.out.print("Team:");
@@ -34,7 +34,7 @@ public class examples {
             }
         }
     }
-    
+
     public static void main(String [ ] args) {
         System.out.println(mult(2, 2));
         //String []s = { "Per", "Kari", "Ola", "nordmann"};
@@ -45,6 +45,6 @@ public class examples {
         cand.add("Ari");
         cand.add("Mertha");
         select(new ArrayList<String>(), cand, 5);
-        
+
     }
 }

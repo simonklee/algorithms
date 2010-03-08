@@ -1,6 +1,6 @@
 Example/test of how to create a shared library with C and GCC in LINUX.
 
-Instructions copy-pasted from: 
+Instructions copy-pasted from:
 http://www.yolinux.com/TUTORIALS/LibraryArchives-StaticAndDynamic.html
 
 $ gcc -Wall -fPIC -c fruits.c
@@ -17,20 +17,20 @@ Compiler options:
    a characteristic required by shared libraries. Also see "-fpic".
  * -shared: Produce a shared object which can then be linked with other
    objects to form an executable.
- * -W1: Pass options to linker. 
-   In this example the options to be passed on to the linker are: 
-   "-soname libfruits.so.1". The name passed with the "-o" option is 
+ * -W1: Pass options to linker.
+   In this example the options to be passed on to the linker are:
+   "-soname libfruits.so.1". The name passed with the "-o" option is
    passed to gcc.
- * Option -o: Output of operation. In this case the name of the shared object 
+ * Option -o: Output of operation. In this case the name of the shared object
    to be output will be "libfruits.so.1.0"
 
 Library Links:
- 
- * The link to /opt/lib/libfruits.so allows the naming convention for the 
-   compile flag -lfruits to work.
- * The link to /opt/lib/libfruits.so.1 allows the run time binding to work. 
 
-Library Path: 
+ * The link to /opt/lib/libfruits.so allows the naming convention for the
+   compile flag -lfruits to work.
+ * The link to /opt/lib/libfruits.so.1 allows the run time binding to work.
+
+Library Path:
 Add /opt/lib to /etc/ld.so.conf
 run $ ldconfig as root to configure the run-time bindings.
 
@@ -41,11 +41,11 @@ Compile:
 $ cd /test
 $ gcc testfruits.c -L/opt/lib -lfruits -o testfruits.out
 
-Was expecting to be able to leave out -L/opt/lib option from compiler, but 
+Was expecting to be able to leave out -L/opt/lib option from compiler, but
 wasn't.
 
-Test: 
-test $ ldd testfruits.out 
+Test:
+test $ ldd testfruits.out
 	linux-vdso.so.1 =>  (0x00007fffbebd6000)
 	libfruits.so.1 => /opt/lib/libfruits.so.1 (0x00007f6f41c32000)
 	libc.so.6 => /lib/libc.so.6 (0x00007f6f418db000)

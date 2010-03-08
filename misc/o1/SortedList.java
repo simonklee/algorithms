@@ -7,7 +7,7 @@ public class SortedList<T> {
         this.list = list;
         this.comp = comp;
     }
-    
+
     public List Sort() {
         Node mark;
         Node reverse;
