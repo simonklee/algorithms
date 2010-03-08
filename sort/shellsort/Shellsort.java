@@ -1,6 +1,6 @@
 /**
  * A simple shell sort implementation using Knuth's intervals,
- * based on examples in Data Structrues & Algorithms in Java by
+ * based on examples for Data Structrues & Algorithms in Java by
  * Robert Lafore. 
  *
  * @author  Simon Zimmermann
@@ -9,9 +9,6 @@
 public class Shellsort {   
     private int[] array;
     private int n;
-    
-    // just statistics. 
-    private int swap, comp;
 
     public Shellsort(int[] array) {
         this.array = array;
@@ -62,8 +59,6 @@ public class Shellsort {
     public void sort() {
         int h = calcGap();
         int tmp, inner, outer;
-        swap = 0;
-        comp = 0;
 
         while (h > 0) {
             for (outer = h; outer < n; outer++) {
