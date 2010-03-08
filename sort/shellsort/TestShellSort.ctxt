@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=void\ setUp()
+comment1.target=void\ tearDown()
+comment2.target=void\ testEven()
+comment3.target=void\ testOdd()
+comment4.target=void\ testSmall()
+comment5.target=void\ testVerySmall()
+comment6.target=void\ testReversed()
+comment7.target=void\ testSorted()
+comment8.params=a
+comment8.target=void\ testSort(int[])
+comment8.text=\nPrivate\ array\ test\ method.\n\n
+comment9.target=void\ testSetup()
+comment9.text=\nTesting\ the\ shellsort\ class'\ basic\ method's.\ \n\n
+numComments=10

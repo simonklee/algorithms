@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=array
+comment0.target=Shellsort(int[])
+comment1.params=data
+comment1.target=void\ append(int)
+comment1.text=\nAppend\ to\ the\ end\ of\ the\ array.\n\n
+comment2.target=int\ get()
+comment2.text=\n@return\ Retrieve\ the\ last\ item\ in\ array\ or\ -1;\n\n
+comment3.target=int\ calcGap()
+comment3.text=\nCalculate\ gap\ using\ Knuth's\ sequence.\n\n
+comment4.params=h
+comment4.target=int\ nextGap(int)
+comment4.text=\n@return\ Reverse\ gap\ calculation\ based\ on\ Knuth's\ sequence.\n\n
+comment5.target=void\ sort()
+comment5.text=\nPerform\ shellsort\ on\ array.\ \n\n
+comment6.target=int\ getN()
+comment7.target=int[]\ getArray()
+comment8.params=a
+comment8.target=void\ setArray(int[])
+numComments=9

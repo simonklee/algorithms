@@ -7,7 +7,7 @@
 #include "utils.h"
 
 // Swap two int vars.
-void SwapInt(int *a, int *b) {
+int SwapInt(int *a, int *b) {
     int tmp = *a;
     *a = *b;
     *b = tmp;
@@ -24,7 +24,7 @@ void SwapAddress(void **a, void **b) {
 // Should do more testing to see if it's bullet proof or if it is a big overhead
 // in swapping intensive algorithms. 
 void SwapValue(void *aAddr, void *bAddr, int elemSize) {
-    void *target = (void*)malloc((*(char*)aAddr + 0) * elemSize);	
+    void *target = malloc((*(char*)aAddr + 0) * elemSize);	
     *(char *)target = *(char *)aAddr;
     *(char *)aAddr = *(char *)bAddr;
     *(char *)bAddr = *(char *)target;
