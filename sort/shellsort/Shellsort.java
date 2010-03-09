@@ -75,7 +75,13 @@ public class Shellsort {
             h = nextGap(h);
         }
     }
-
+   
+    public void print() {
+        for(int i = 0; i < n; i++)
+            System.out.print(array[i] + " ");
+        System.out.println();
+    }
+    
     // Get and set methods.
     public int getN() {return n;}
     public int[] getArray() {return array;}

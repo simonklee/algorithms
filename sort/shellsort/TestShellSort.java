@@ -36,8 +36,9 @@ public class TestShellSort extends junit.framework.TestCase
     private void testSort(int[] a) {
         shell.setArray(a);
         shell.sort();
-        // assertEquals will only match the objects (obj == obj).
-        assertTrue(java.util.Arrays.equals(a, shell.getArray()));
+        for (int i = 0; i < shell.getN(); i++) {
+            assertEquals(i+1, shell.getArray()[i]);
+        }
     }
 
     /**

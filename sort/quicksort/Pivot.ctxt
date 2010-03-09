@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=Pivot()
+comment1.target=int\ genPiv()
+comment2.target=int\ getPiv()
+comment3.params=left\ right\ piv
+comment3.target=int\ partition(int,\ int,\ int)
+comment4.params=a\ b
+comment4.target=void\ swap(int,\ int)
+comment5.target=void\ print()
+comment6.target=int\ getN()
+comment7.target=int[]\ getArray()
+comment8.params=a
+comment8.target=void\ setArray(int[])
+numComments=9

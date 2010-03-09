@@ -11,5 +11,5 @@ comment8.params=a
 comment8.target=void\ testSort(int[])
 comment8.text=\nPrivate\ array\ test\ method.\n\n
 comment9.target=void\ testSetup()
-comment9.text=\nTesting\ the\ shellsort\ class'\ basic\ method's.\ \n\n
+comment9.text=\nTesting\ the\ shellsort\ class'\ basic\ method's.\n\n
 numComments=10
