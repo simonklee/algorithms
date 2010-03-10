@@ -6,6 +6,8 @@ public class QuickSort
 {
     private int[] array;
     private int n;
+    private int comp;
+    private int swap;
 
     public QuickSort() {
 
@@ -15,7 +17,12 @@ public class QuickSort
      * Do Quicksort on array.
      */
     public void sort() {
+        comp = 0;
+        swap = 0;
+        long start = System.currentTimeMillis(); // start. 
         qsort(0, n-1);
+        
+        printStat(System.currentTimeMillis() - start);
     }
     
     private void qsort(int left, int right) {
@@ -40,11 +47,13 @@ public class QuickSort
     public int partition(int leftPtr, int rightPtr, int piv) {
         int left = leftPtr;
         int right = rightPtr;
+
         while (left <= right) {
             while (array[left] < piv) {
                 left++;
+                comp++;
             }
-            while (array[--right] > piv);
+            while (right > 0 && array[--right] > piv);
     
             if (left >= right)
                 break;
@@ -54,10 +63,16 @@ public class QuickSort
         return left;
     }    
 
+    public void printStat(long time) {
+        System.out.println("Swap: "+swap+", Comp: "+comp+" Time: "+time+"ms");
+    }
+    
     /**
      * Simple swap on internal array.
      */
     private void swap(int a, int b) {
+        //System.out.println("Swap: "+array[a]+" <> "+array[b]);
+        swap++;
         int tmp = array[a];
         array[a] = array[b];
         array[b] = tmp;
@@ -91,19 +106,19 @@ public class QuickSort
         System.out.println();
     }
     
-    public void fill() {
-        int N = 10;    
+    public void fill(int N) {
         array = new int[N];
         Random rand = new Random();
 
         for (int i = 0; i < N; i++) {
-            int nr = rand.nextInt(99);
-            while (find(array, nr) > 0) {
-                nr = rand.nextInt(99);
-            }
+            int nr = rand.nextInt(N);
+            //while (find(array, nr) > 0) {
+              //  nr = rand.nextInt(N);
+            //}
             array[i] = nr;
-            this.n = array.length;
+            
         }
+        this.n = array.length;
     }
     
     private int find(int[] arr, int key) {

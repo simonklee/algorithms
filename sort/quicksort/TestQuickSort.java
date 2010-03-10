@@ -12,8 +12,6 @@ public class TestQuickSort extends junit.framework.TestCase
     
     public TestQuickSort()  {
         quick = new QuickSort();
-
-
     }
     
 
@@ -22,6 +20,14 @@ public class TestQuickSort extends junit.framework.TestCase
     protected void tearDown() {}
     
     public void testDefaultSort() {testSort(arrDefault); }
+    public void testLargerArray() {
+        quick.fill(10);
+        quick.sort();
+        for (int i = quick.getN(); i > 0; --i) {
+            assertEquals(i-1, quick.get());
+        }        
+    }
+    
     public void testBigSort() {
         quick.setArray(arrBig);
         quick.sort();
@@ -31,8 +37,7 @@ public class TestQuickSort extends junit.framework.TestCase
         }
         
     }
-    
-
+   
     /**
      * Private array test method.
      */
