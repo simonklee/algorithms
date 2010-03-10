@@ -22,10 +22,10 @@ Getting Started
     It's of course possible to build these algorithms without the citrus
     dependency.
 *   I've added a range of [BlueJ](http://www.bluej.org/) packages.
-    I've kept the meta-data when commiting to github. It's possible these
-    meta files seem confusing, but if you'd like to the test the algorithms
-    I recommend getting BlueJ. It's a nice tool for learning about algorithms
-    in Java due to it's simple debugger.
+    I've kept the meta-data when commiting to github. The meta files might seem
+    confusing, but I kept them as it makes it easier to test the algorithms in
+    BlueJ. The debugger available in the BlueJ Java-editor is easy to use and
+    makes solving these kind of problem sets a simpler task.
 
 
 License
