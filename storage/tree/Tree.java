@@ -13,7 +13,13 @@ public class Tree {
         insert(3);
         insert(7);
         insert(8);
-        
+        insert(20);
+        insert(30);
+        insert(11);
+        insert(16);
+        insert(13);
+        insert(4);
+        insert(1);
     }
     
     /**
@@ -112,6 +118,11 @@ public class Tree {
      */
     public void delete(int key) {}
     
+    private Node successor(Node root) {
+        Node succ = findMin(root.getRight());
+        return succ;
+    }
+    
     /**
      * Find the minimum value in a binary tree. 
      * @return Node Minium valued note on the left flank.
@@ -128,6 +139,25 @@ public class Tree {
     private Node findMin(Node root) {
         if (root.getLeft() == null)    
             return root;
-        return findMin(root.getLeft());	
+        return findMin(root.getLeft()); 
     }
+    
+     /**
+     * Find the maxium value in a binary tree. 
+     * @return Node Maxium valued note on the right flank.
+     */
+    public Node max() {
+        return findMax(tree);
+    }
+        
+    /**
+     * Traverse the right-most sided nodes until null is reached, then 
+     * return the root of that null value.
+     * @return Node Maxium valued note on the right flank.
+     */
+    private Node findMax(Node root) {
+        if (root.getRight() == null)    
+            return root;
+        return findMax(root.getRight()); 
+    }    
 }
