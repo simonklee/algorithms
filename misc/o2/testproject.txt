@@ -1,0 +1,21 @@
+# Project file format
+#
+# Each line contains a task definition formatted like this:
+# taskname duration : dep1 dep2 dep3...
+#
+# taskname, duration and the ':' are mandatory
+# the dependencies (dep1 etc.) are optional
+#
+# taskname is a single word
+# duration is an integer
+# dependencies (if present) must be names of other tasks
+#
+# Blank lines and comments are ignored. Comments start with '#'.
+Start 0 :
+A 3 : Start
+B 4 : Start
+C 3 : B
+D 1 : A
+E 2 : A
+F 3 : D
+End 0 : C E F
