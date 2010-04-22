@@ -3,10 +3,15 @@ import re
 
 
 class Project(object):
+    '''
+    A project is nothing more then a list of tasks.
+    
+    '''
 
     def __init__(self, filename):
         self.tasks = dict()
         self._load(filename)
+        self._debug()
 
     def _load(self, filename):
         '''
@@ -28,21 +33,25 @@ class Project(object):
                 name, duration = line[0], line[1]
                 predecessors = [self.tasks[p] for p in line[3:]]
                 self.tasks[name] = Task(name, duration, predecessors)
-
-                print "Task: %s duration: %s preds: " % (name, duration),
-                for l in predecessors:
-                    print "%s" % l.name,
-                print ""
         except IndexError:
             print 'Failed to desipher the tasks-file. Please check your syntax'
-            exit()
+    
+    def _debug(self):
+        for t in self.tasks.values():
+            print "%s %s >" % (t.name, t.duration),
+            for p in t.predecessors:
+                print "%s" % p.name,
+            print ""
 
 
 class Task(object):
-
+    '''
+    Representation of a task/activity in a project.
+    
+    '''
     def __init__(self, name, duration=None, predecessors=[], **kwargs):
         self.name = name
-        self.predecessors = []
+        self.predecessors = predecessors
         self.duration = duration
         self.earliest_start = kwargs.pop('earliest_start', None)
         self.latest_start = kwargs.pop('latest_start', None)
