@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=name
+comment0.target=Task(String)
+comment0.text=This\ constructor\ is\ used\ by\ the\ project\nfile\ loader\ (Project.load())\ \ \ \n
+comment1.params=duration
+comment1.target=void\ setDuration(int)
+comment1.text=Set\ task\ duration\ -\ used\ by\ file\ loader\ \n
+comment2.params=t
+comment2.target=void\ addPredecessor(Task)
+comment2.text=Add\ a\ task\ which\ must\ be\ finished\ before\nthis\ can\ start\ -\ used\ by\ file\ loader\ \ \ \n
+numComments=3

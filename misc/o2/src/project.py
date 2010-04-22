@@ -1,6 +1,7 @@
-
+#!../ve/bin/python
 import os
 import sys
+import re
 
 
 class Project(object):
@@ -15,9 +16,17 @@ class Project(object):
         Tasks dictionary.
         
         '''
-        with open(filename, mode='r') as fp:
-            for line in fp:
-                name, duration = line.split(None, 2)
+        fp = open(filename, mode='r')
+        lines = (line.strip().split(' ') for line in fp.readlines()
+            if re.search(r'^\w', line))
+        fp.close()
+        
+        for line in lines:
+            print "Task: %s duration: %s preds: " % (line[0], line[1]),
+            for i, l in enumerate(line[3:]):
+                print "%s" % l,
+            print ""
+        
 
     def _task(self, name):
         '''
