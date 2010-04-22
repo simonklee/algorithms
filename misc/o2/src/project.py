@@ -1,6 +1,4 @@
 #!../ve/bin/python
-import os
-import sys
 import re
 
 
