@@ -59,6 +59,7 @@ class TestSearch(unittest.TestCase):
     def test_breadth_search(self):
         self.assertEqual(self.graph.breadth_search(), ['A', 'B', 'D', 'C', 'E'])
 
+
 class TestSpanningTree(unittest.TestCase):
     
     def __init__(self, *args, **kwargs):
@@ -96,6 +97,29 @@ class TestSpanningTree(unittest.TestCase):
         res = self.graph.minimum_spanning()
         self.assertEqual(res, expected)
         self.assertEqual(len(res), self.graph.size - 1)
+
+
+class TestSorting(unittest.TestCase):
+    
+    def __init__(self, *args, **kwargs):
+        self.graph = Graph()
+        self.graph.add_vertex('Start')
+        for c in range(65, 71):
+            self.graph.add_vertex(chr(c))
+        self.graph.add_dir_edge(0, 1) # START A
+        self.graph.add_dir_edge(0, 2) # START B
+        self.graph.add_dir_edge(1, 4) # AD
+        self.graph.add_dir_edge(1, 5) # AE
+        self.graph.add_dir_edge(2, 3) # BC
+        self.graph.add_dir_edge(3, 7) # C END
+        self.graph.add_dir_edge(4, 6) # DF
+        self.graph.add_dir_edge(5, 7) # E END
+        self.graph.add_dir_edge(6, 7) # F END
+        self.graph.add_vertex('End')
+        super(TestSorting, self).__init__(*args, **kwargs)
+        
+    def test_topological_sorting(self):
+        print self.graph.topological_sorting()
         
 if __name__ == '__main__':
     unittest.main()

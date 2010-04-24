@@ -92,6 +92,11 @@ class Graph(object):
         return res_stack
 
     def minimum_spanning(self, start=0):
+        '''
+        A minimum spanning tree is created by using the breadth first algorithm
+        and recording the steps in a list which is returned.
+        
+        '''
         queue = deque([start])
         self.vertex[start].visited = True
         res = list()
@@ -104,12 +109,23 @@ class Graph(object):
         self._reset()
         return res
     
+    def topological_sorting(self, start=0):
+        '''
+        Think this should be ok. Does not check for circular conditions. 
+        '''
+        top = self.breadth_search(start)
+        top.reverse()
+        return top
+    
     def add_vertex(self, char):
         self.vertex.append(Vertex(char))
 
     def add_edge(self, start, end):
         self.adjacency_matrix[start][end] = 1
         self.adjacency_matrix[end][start] = 1
+        
+    def add_dir_edge(self, start, end):
+        self.adjacency_matrix[start][end] = 1
 
     @property
     def size(self):
@@ -136,6 +152,12 @@ class Graph(object):
                     self.vertex[adj].visited:
                 yield adj
     
+    def _end(self, vertex):
+        '''
+        Return the end of the graph, that is, a vertex without successors.
+        
+        '''
+    
     def _reset(self):
         for v in self.vertex:
             v.visited = False
@@ -149,3 +171,6 @@ class Vertex(object):
     def __init__(self, char):
         self.name = char
         self.visited = False
+
+if __name__ == '__main__':
+    pass
