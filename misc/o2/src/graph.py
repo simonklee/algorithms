@@ -91,6 +91,19 @@ class Graph(object):
         self._reset()
         return res_stack
 
+    def minimum_spanning(self, start=0):
+        queue = deque([start])
+        self.vertex[start].visited = True
+        res = list()
+        while len(queue) > 0:
+            current = queue.popleft()
+            for adj in self._find_adjacency(current):
+                self.vertex[adj].visited = True
+                queue.append(adj)
+                res.append([self.vertex[current].name, self.vertex[adj].name])
+        self._reset()
+        return res
+    
     def add_vertex(self, char):
         self.vertex.append(Vertex(char))
 
