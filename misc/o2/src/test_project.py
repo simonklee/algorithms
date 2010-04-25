@@ -11,9 +11,43 @@ class ProjectTest(unittest.TestCase):
         super(ProjectTest, self).__init__(*args, **kwargs)
 
     def test_project(self):
-        #self.p.dijkstra()
-        pass
+        expected = (
+            ('START', 0),
+            ('A', 3),
+            ('B', 4),
+            ('C', 7),
+            ('D', 4),
+            ('E', 5),
+            ('F', 7),
+            ('END', 7),
+        )
+        tree = self.p.dijkstra()
+        for name, earliest_start in expected:
+            self.assertEqual(tree[name].earliest_start, earliest_start)
 
+    def test_tasks(self):
+        a = Task('A', 2)
+        aa = Task('A', 2)
+        aaa = Task('A', 3)
+        b = Task('B', 2)
+        c = Task('C', 3)
+        
+        self.assertTrue(a.__eq__(aa))
+        self.assertTrue(aa.__eq__(a))
+        self.assertTrue(aaa.__eq__(a))
+        self.assertFalse(a.__eq__(b))
+        self.assertFalse(b.__eq__(a))
+        
+        se = set([a, b])
+        self.assertTrue(a in se)
+        self.assertTrue(aa in se)
+        self.assertTrue(b in se)
+        self.assertFalse(c in se)
+        
+        c.earliest_start = 2
+        a.earliest_start = 1
+        self.assertFalse(a > c)
+  
 
 class Item(KeyedHashingMixin, KeyedComparisonMixin):
     
@@ -44,6 +78,9 @@ class TestPriorityQueue(unittest.TestCase):
     def test_contains(self):
         pq = PriorityQueue(self.items)
         self.assertEqual(pq.contains(Item(4)), True)
+        
+    def test_project(self):
+        p = Project('testproject.txt')
 
 if __name__ == '__main__':
     unittest.main()

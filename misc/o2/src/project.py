@@ -1,6 +1,7 @@
 #!../ve/bin/python
 import re
-from datastructures import KeyedComparisonMixin, KeyedHashingMixin
+import pdb
+from datastructures import KeyedComparisonMixin, KeyedHashingMixin, PriorityQueue
 
 class Project(object):
     '''
@@ -16,7 +17,7 @@ class Project(object):
     def __init__(self, filename):
         self.tasks = dict()
         self._load(filename)
-        self._debug()
+        #self._debug()
 
     def _load(self, filename):
         '''
@@ -35,33 +36,54 @@ class Project(object):
 
         try:
             for line in lines:
-                name, duration = line[0], line[1]
+                name, duration = line[0], int(line[1])
                 predecessors = [self.tasks[p] for p in line[3:]]
-                self.tasks[name] = Task(name, duration, predecessors)
+                self.tasks[name] = Task(name, int(duration), predecessors)
         except IndexError:
             print 'Failed to desipher the tasks-file. Please check your syntax'
-    
-    def dijkstra(self, start='END'):
         
-        def add_to_pq(successor, tasks={}):
+        # The last part is to the add the reverse the relation. It makes it ten
+        # times easier and avoids a chicken-egg sitiuation at a later stage.
+        for task in self.tasks.itervalues():
+            for p in task.predecessors:
+                p.successors.update({task.name: task})
+    
+    def dijkstra(self, start='START'):
+        '''
+        This algorithm will find the shortest path for each task limited by
+        the tasks prerequisites, that is, every task before in the one-
+        directional tree. As a result the tasks in the ``tasks`` dict will have
+        their earliest_start updated. 
+        
+        '''        
+        def add_to_pq(successor, tasks=[]):
             for t in tasks:
-                # Check if the tasks cost is lower then the one in PQ before this.
-                t.cost = t.duration + successor.earliest_start
-                pq.push(t)
+                if t in tree:
+                    continue
+                old_task = pq.get(t) or None
+                new_cost = t.duration + successor.earliest_start
+                if not old_task:
+                    t.earliest_start = new_cost
+                    pq.push(t)                
+                elif old_task.earliest_start > new_cost:
+                    t.earliest_start = new_cost
         
         def add_to_tree(task):
-            add_to_pq(task.sucessors, task)
-            tree.append(task)
+            add_to_pq(task, task.successors.itervalues())
+            tree.update({task.name: task})
         
         # init
-        tree = []
+        tree = dict()
         pq = PriorityQueue([])
-        add_to_tree(tasks[start])
+        start_task = self.tasks[start]
+        start_task.earliest_start = start_task.duration
+        add_to_tree(start_task)
         
         while(pq.size > 0):
             #add_to_tree(pq.pop())
-            break
-    
+            add_to_tree(pq.biggest())
+        return tree
+
     @property
     def size(self):
         return len(self.tasks)
@@ -74,7 +96,7 @@ class Project(object):
             print ""
 
 
-class Task(KeyedComparisonMixin, KeyedHashingMixin):
+class Task(KeyedComparisonMixin):
     '''
     Representation of a task/activity in a project.
     The inherited classes are implementing rich comparison and hash
@@ -94,3 +116,21 @@ class Task(KeyedComparisonMixin, KeyedHashingMixin):
     def __key__(self):
         return self.earliest_start
 
+    def __hash__(self):
+        return hash(self.name)
+
+    def __eq__(self, other):
+        return self.name == other
+
+    def __str__(self):
+        return "%s@duration: %s, SP: %s, successors. %s" % \
+            (self.name, self.duration, self.earliest_start,
+            [s.name for s in self.successors.itervalues()])
+
+if __name__ == '__main__':
+    tree = Project('testproject.txt').dijkstra()
+    for t in tree.values():
+        print t.name, t.earliest_start
+            
+
+    
