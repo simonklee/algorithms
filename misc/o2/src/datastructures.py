@@ -1,6 +1,8 @@
 #!../ve/bin/python
 import unittest
 import heapq
+import pdb
+from bisect import bisect_left
 
 
 class KeyedEqualityMixin(object):
@@ -45,12 +47,26 @@ class Stack(list):
 
 class PriorityQueue(object):
    '''
-   A priority queue based on heapq and set. 
+   A priority queue based on heapq and hashmap.
+   
+   This is a overly complicated solution for something that shouldn't be that
+   hard. My input to the program was.
+   
+      * be able to choose key to sort after.
+      * be unique and uniqueness aka __eq__() should not have something to
+        do with key.
+      * be able to pop from both ends.
+      * be fast lookup.
+      
+   I think a sorted array would have been better than this, even though the
+   lookup with b-search in a sorted array is worst-case, it's less memory use
+   and overhead then keeping track of two datastructures.
    
    '''
-   def __init__(self, items=[]):
-      self.keys = set(items)
-      self.heap = items
+   def __init__(self, key, items=[]):
+      self.keys = dict((item, item) for item in items)
+      self.heap = list((key(item), item) for item in items)
+      self.key = key
       heapq.heapify(self.heap)
    
    def contains(self, item):
@@ -60,30 +76,29 @@ class PriorityQueue(object):
       return item if self.contains(item) else None
    
    def pop(self):
-      item = heapq.heappop(self.heap)
-      self.keys.remove(item)
-      return item
+      prio, item = heapq.heappop(self.heap)
+      return self.keys.pop(item)      
    
    def pop_big(self):
       try:
-         i = self.heap[-1]
-         self.keys.remove(i)
-         self.heap.remove(i)
-         return i
+         prio, item = self.heap[-1]
+         self.heap.remove((prio,item))
+         return self.keys.pop(item)
       except KeyError:
          pass
 
    def push(self, item):
       if not self.contains(item):
-         self.keys.add(item)
-         heapq.heappush(self.heap, item)
+         self.keys.update({item:item})
+         heapq.heappush(self.heap, (self.key(item), item))
       
    def push_replace(self, item):
       raise NotImplemented
    
    def peek(self):
       try:
-         return self.heap[0]
+         pr, item = self.heap[0]
+         return item
       except KeyError:
          pass
    

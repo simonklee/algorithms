@@ -78,8 +78,8 @@ class Project(object):
             add_to_pq(task, task.successors.itervalues())
             tree.update({task.name: task})
         
-        tree = dict()           # store result
-        pq = PriorityQueue([])  # lookup table of what is next.
+        tree = dict()
+        pq = PriorityQueue(lambda x: x.earliest_start, [])  # lookup table of what is next.
         
         # init by setting the ``start`` as the first task in the tree.
         start_task = self.tasks[start] 
@@ -99,22 +99,20 @@ class Project(object):
         
         '''
         def add_to_tree(task):
-            if task.name == 'E': pdb.set_trace()
             for t in filter(lambda x: x not in tree, task.predecessors):
                 t.latest_start = task.latest_start - t.duration if t.duration > 0 else 0
                 pq.push(t)
-                print "set \"%s\" " % t.name 
+                #print "set \"%s\" " % t.name 
             tree.update({task.name: task})
-        
-        tree = dict()           # store result
-        pq = PriorityQueue([])  # lookup table of what is next.
+
+        tree = dict() 
+        pq = PriorityQueue(lambda x: x.latest_start, []) 
         
         # init by setting the ``start`` as the first task in the tree.
         start_task = self.tasks[start] 
         start_task.latest_start = start_task.earliest_start
         add_to_tree(start_task)
-        print "hello"
-        #pdb.set_trace()
+        
         while(pq.size > 0):
             add_to_tree(pq.pop())
             
@@ -162,11 +160,3 @@ class Task(KeyedComparisonMixin):
         return "%s@duration: %s, SP: %s, successors. %s" % \
             (self.name, self.duration, self.earliest_start,
             [s.name for s in self.successors.itervalues()])
-
-if __name__ == '__main__':
-    p = Project('testproject.txt')
-    tree = p.dijkstra()
-    for t in tree.values():
-        print t.name, t.earliest_start
-    
-    tree = p.latest()

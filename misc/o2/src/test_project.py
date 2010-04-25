@@ -4,6 +4,7 @@ import unittest
 from datastructures import KeyedHashingMixin, KeyedComparisonMixin, PriorityQueue
 from project import Project, Task
 
+
 class ProjectTest(unittest.TestCase):
     
     def __init__(self, *args, **kwargs):
@@ -25,10 +26,25 @@ class ProjectTest(unittest.TestCase):
         for name, earliest_start in expected:
             self.assertEqual(tree[name].earliest_start, earliest_start)
     
-    def tes_latest(self):
+    def test_latest(self):
+        expected = (
+            ('START', 0),
+            ('A', 0),
+            ('B', 0),
+            ('C', 4),
+            ('D', 3),
+            ('E', 5),
+            ('F', 4),
+            ('END', 7),
+        )
         p = Project('testproject.txt')
         p.dijkstra()
         tree = p.latest()
+        for name, latest_start in expected:
+            self.assertEqual(tree[name].latest_start, latest_start)
+        
+        for k, v in tree.iteritems():
+            print "%s @ %s" % (k, v.latest_start)
 
     def test_tasks(self):
         a = Task('A', 2)
@@ -68,20 +84,20 @@ class TestPriorityQueue(unittest.TestCase):
     items = [Item(x) for x in range(10)]
     
     def test_init_pop(self):
-        pq = PriorityQueue(self.items)
+        pq = PriorityQueue(lambda i: i.__key__(), self.items)
         self.assertEqual(pq.peek().x, 0)
         [self.assertEqual(pq.pop().x, i) for i in range(pq.size)]
         self.assertEqual(pq.size, 0)
     
     def test_push_pop(self):
-        pq = PriorityQueue([])
+        pq = PriorityQueue(lambda i: i.__key__(), [])
         pq.push(Item(5))
         pq.push(Item(1))
         pq.push(Item(3))
         self.assertEqual(pq.pop().x, 1)
     
     def test_contains(self):
-        pq = PriorityQueue(self.items)
+        pq = PriorityQueue(lambda i: i.__key__(), self.items)
         self.assertEqual(pq.contains(Item(4)), True)
         
     def test_project(self):
@@ -89,4 +105,3 @@ class TestPriorityQueue(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    #project = Project('testproject.txt')
