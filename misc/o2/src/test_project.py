@@ -10,7 +10,7 @@ class ProjectTest(unittest.TestCase):
         self.p = Project('testproject.txt')    
         super(ProjectTest, self).__init__(*args, **kwargs)
 
-    def test_project(self):
+    def test_dijkstra(self):
         expected = (
             ('START', 0),
             ('A', 3),
@@ -24,6 +24,11 @@ class ProjectTest(unittest.TestCase):
         tree = self.p.dijkstra()
         for name, earliest_start in expected:
             self.assertEqual(tree[name].earliest_start, earliest_start)
+    
+    def tes_latest(self):
+        p = Project('testproject.txt')
+        p.dijkstra()
+        tree = p.latest()
 
     def test_tasks(self):
         a = Task('A', 2)

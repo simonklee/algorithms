@@ -50,7 +50,7 @@ class Project(object):
             for p in task.predecessors:
                 p.successors.update({task.name: task})
     
-    def dijkstra(self, start='START'):
+    def dijkstra(self, start='START', reversed=False):
         '''
         Will find the shortest path for each task limited by the tasks
         prerequisites, that is, every task before it in the one-directional
@@ -68,7 +68,7 @@ class Project(object):
                 if old_task == None:
                     t.earliest_start = new_cost
                     pq.push(t)
-                    print "added earliest_start(%s) to \"%s\"" % (t.earliest_start, t.name)
+                    #print "added earliest_start(%s) to \"%s\"" % (t.earliest_start, t.name)
                 #elif old_task.earliest_start > new_cost:
                 #    print "changed earliest_start(%s -> %s) to \"%s\"" % (
                 #        t.earliest_start, new_cost, t.name)
@@ -89,7 +89,37 @@ class Project(object):
         while(pq.size > 0):
             add_to_tree(pq.pop_big())
         return tree
-
+    
+    def latest(self, start='END'):
+        '''
+        Find the latest start time for each task by traversing the tree,
+        backwards and calculating the latest_start by subtracting the
+        minimum of the latest start of the successors, minus the tasks
+        duration.
+        
+        '''
+        def add_to_tree(task):
+            if task.name == 'E': pdb.set_trace()
+            for t in filter(lambda x: x not in tree, task.predecessors):
+                t.latest_start = task.latest_start - t.duration if t.duration > 0 else 0
+                pq.push(t)
+                print "set \"%s\" " % t.name 
+            tree.update({task.name: task})
+        
+        tree = dict()           # store result
+        pq = PriorityQueue([])  # lookup table of what is next.
+        
+        # init by setting the ``start`` as the first task in the tree.
+        start_task = self.tasks[start] 
+        start_task.latest_start = start_task.earliest_start
+        add_to_tree(start_task)
+        print "hello"
+        #pdb.set_trace()
+        while(pq.size > 0):
+            add_to_tree(pq.pop())
+            
+        return tree        
+        
     @property
     def size(self):
         return len(self.tasks)
@@ -134,9 +164,9 @@ class Task(KeyedComparisonMixin):
             [s.name for s in self.successors.itervalues()])
 
 if __name__ == '__main__':
-    tree = Project('testproject.txt').dijkstra()
+    p = Project('testproject.txt')
+    tree = p.dijkstra()
     for t in tree.values():
         print t.name, t.earliest_start
-            
-
     
+    tree = p.latest()
