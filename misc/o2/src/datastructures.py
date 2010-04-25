@@ -45,8 +45,7 @@ class Stack(list):
 
 class PriorityQueue(object):
    '''
-   A priority queue based on heapq and set. Memory usage isn't very good,
-   but the lookup is. Based on an example found on stackoverflow.com
+   A priority queue based on heapq and set. 
    
    '''
    def __init__(self, items=[]):
@@ -65,21 +64,22 @@ class PriorityQueue(object):
       self.keys.remove(item)
       return item
    
+   def pop_big(self):
+      try:
+         i = self.heap[-1]
+         self.keys.remove(i)
+         self.heap.remove(i)
+         return i
+      except KeyError:
+         pass
+
    def push(self, item):
-      #import pdb
-      #pdb.set_trace()
       if not self.contains(item):
          self.keys.add(item)
          heapq.heappush(self.heap, item)
       
    def push_replace(self, item):
       raise NotImplemented
-   
-   def biggest(self):
-      i = max(self.heap)
-      self.keys.remove(i)
-      self.heap.remove(i)
-      return i
    
    def peek(self):
       try:

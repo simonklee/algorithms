@@ -28,6 +28,10 @@ class Project(object):
         word will be recognized. the tasks are split by whitespace in the file,
         and a set of predecessors(dependencies) are listed after a colon, those
         are also split by whitespace.
+        
+        We also add successors to all task to simple the shortest path
+        algorithm. This adds some overhead, O(N^2), to the initialization
+        of the project.
 
         '''
         with open(filename, mode='r') as fp:
@@ -42,46 +46,48 @@ class Project(object):
         except IndexError:
             print 'Failed to desipher the tasks-file. Please check your syntax'
         
-        # The last part is to the add the reverse the relation. It makes it ten
-        # times easier and avoids a chicken-egg sitiuation at a later stage.
         for task in self.tasks.itervalues():
             for p in task.predecessors:
                 p.successors.update({task.name: task})
     
     def dijkstra(self, start='START'):
         '''
-        This algorithm will find the shortest path for each task limited by
-        the tasks prerequisites, that is, every task before in the one-
-        directional tree. As a result the tasks in the ``tasks`` dict will have
-        their earliest_start updated. 
+        Will find the shortest path for each task limited by the tasks
+        prerequisites, that is, every task before it in the one-directional
+        tree. As a result the tasks in the ``tasks`` dict will have
+        their earliest_start updated. This is a sort of reversed dijkstra
+        shortest path algorithm. It looks for the longest path.
         
         '''        
         def add_to_pq(successor, tasks=[]):
             for t in tasks:
                 if t in tree:
                     continue
-                old_task = pq.get(t) or None
+                old_task = pq.get(t)
                 new_cost = t.duration + successor.earliest_start
-                if not old_task:
+                if old_task == None:
                     t.earliest_start = new_cost
-                    pq.push(t)                
-                elif old_task.earliest_start > new_cost:
-                    t.earliest_start = new_cost
+                    pq.push(t)
+                    print "added earliest_start(%s) to \"%s\"" % (t.earliest_start, t.name)
+                #elif old_task.earliest_start > new_cost:
+                #    print "changed earliest_start(%s -> %s) to \"%s\"" % (
+                #        t.earliest_start, new_cost, t.name)
+                #    t.earliest_start = new_cost
         
         def add_to_tree(task):
             add_to_pq(task, task.successors.itervalues())
             tree.update({task.name: task})
         
-        # init
-        tree = dict()
-        pq = PriorityQueue([])
-        start_task = self.tasks[start]
+        tree = dict()           # store result
+        pq = PriorityQueue([])  # lookup table of what is next.
+        
+        # init by setting the ``start`` as the first task in the tree.
+        start_task = self.tasks[start] 
         start_task.earliest_start = start_task.duration
         add_to_tree(start_task)
         
         while(pq.size > 0):
-            #add_to_tree(pq.pop())
-            add_to_tree(pq.biggest())
+            add_to_tree(pq.pop_big())
         return tree
 
     @property
