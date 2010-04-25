@@ -119,7 +119,9 @@ class TestSorting(unittest.TestCase):
         super(TestSorting, self).__init__(*args, **kwargs)
         
     def test_topological_sorting(self):
-        print self.graph.topological_sorting()
+        expected = ['End', 'F', 'C', 'E', 'D', 'B', 'A', 'Start']
+        res = self.graph.topological_sorting()
+        self.assertEqual(res, expected)
         
 if __name__ == '__main__':
     unittest.main()

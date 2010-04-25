@@ -1,10 +1,15 @@
 #!../ve/bin/python
 import re
-
+from datastructures import KeyedComparisonMixin, KeyedHashingMixin
 
 class Project(object):
     '''
     A project is nothing more then a list of tasks.
+    
+    duration == longest path to END task
+    earliest_start == longest path to each vertex
+    ( nEND's latest_start == END's earliest start)
+    latest_start == latest_start of successor - tasks duration. 
     
     '''
 
@@ -36,6 +41,31 @@ class Project(object):
         except IndexError:
             print 'Failed to desipher the tasks-file. Please check your syntax'
     
+    def dijkstra(self, start='END'):
+        
+        def add_to_pq(successor, tasks={}):
+            for t in tasks:
+                # Check if the tasks cost is lower then the one in PQ before this.
+                t.cost = t.duration + successor.earliest_start
+                pq.push(t)
+        
+        def add_to_tree(task):
+            add_to_pq(task.sucessors, task)
+            tree.append(task)
+        
+        # init
+        tree = []
+        pq = PriorityQueue([])
+        add_to_tree(tasks[start])
+        
+        while(pq.size > 0):
+            #add_to_tree(pq.pop())
+            break
+    
+    @property
+    def size(self):
+        return len(self.tasks)
+    
     def _debug(self):
         for t in self.tasks.values():
             print "%s %s >" % (t.name, t.duration),
@@ -44,17 +74,23 @@ class Project(object):
             print ""
 
 
-class Task(object):
+class Task(KeyedComparisonMixin, KeyedHashingMixin):
     '''
     Representation of a task/activity in a project.
+    The inherited classes are implementing rich comparison and hash
+    on the returned __key__. This enables the Task to be compareable and
+    is used in a priority queue to define the earliest_start of each
+    Task.
     
     '''
     def __init__(self, name, duration=None, predecessors=[], **kwargs):
         self.name = name
         self.predecessors = predecessors
+        self.successors = dict()
         self.duration = duration
         self.earliest_start = kwargs.pop('earliest_start', None)
         self.latest_start = kwargs.pop('latest_start', None)
+    
+    def __key__(self):
+        return self.earliest_start
 
-if __name__ == '__main__':
-    project = Project('testproject.txt')
