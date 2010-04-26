@@ -41,13 +41,60 @@ class ProjectTest(unittest.TestCase):
             ('END', 7),
         )
         p = Project('testproject.txt')
-        p.earliest(debug=True)
-        tree = p.latest()
+        p.earliest(debug=False)
+        tree = p.latest(debug=False)
         for name, latest_start in expected:
             self.assertEqual(tree[name].latest_start, latest_start)
            # print "%s @ latest_start: %s" % (name, tree[name].latest_start)
         #for k, v in tree.iteritems():
         #    print "%s @ %s" % (k, v.latest_start)
+
+    def test_critical(self):
+        '''
+        The critical path function will return one critical path.
+        
+        This path is expected with the testproject.txt-file.
+        
+        name : START, ea: 0, la: 0, dur: 0
+        name : A,     ea: 0, la: 0, dur: 3        
+        name : D,     ea: 3, la: 3, dur: 1
+        name : F,     ea: 4, la: 4, dur: 3
+        name : END,   ea: 7, la: 7, dur: 0
+        
+        name : START, ea: 0, la: 0, dur: 0
+        name : B,     ea: 0, la: 0, dur: 4
+        name : C,     ea: 4, la: 4, dur: 3
+        name : END,   ea: 7, la: 7, dur: 0
+        
+        name : START, ea: 0, la: 0, dur: 0
+        name : A,     ea: 0, la: 0, dur: 3   
+        name : E,     ea: 3, la: 5, dur: 2
+        STOP
+
+        '''
+        expected = ('START', 'A', 'D', 'F', 'END')
+        
+        p = Project('testproject.txt')
+        p.earliest()
+        p.latest()
+        path = p.critical()
+        
+        for i, t in enumerate(path):
+            #print "name : %s, ea: %s, la: %s, dur: %s" % \
+            #(t.name, t.earliest_start, t.latest_start, t.duration)
+            self.assertEqual(t.name, expected[i])
+        
+        
+
+    def test_topological(self):
+        expected = ('START', 'A', 'B', 'C', 'E', 'D', 'F', 'END')
+        p = Project('testproject.txt')
+        p.earliest()
+        p.latest()
+        
+        for i, t in enumerate(p.topological()):
+            #print "%s, %s" % (t.name, expected[i])
+            self.assertEqual(t.name, expected[i])
 
     def test_tasks(self):
         a = Task('A', 2)

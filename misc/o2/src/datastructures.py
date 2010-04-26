@@ -1,9 +1,6 @@
 #!../ve/bin/python
 import unittest
 import heapq
-import pdb
-from bisect import bisect_left
-
 
 class KeyedEqualityMixin(object):
    def __eq__(self, other):

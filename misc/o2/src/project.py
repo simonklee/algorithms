@@ -1,7 +1,7 @@
 #!../ve/bin/python
 import re
 import pdb
-from datastructures import KeyedComparisonMixin, KeyedHashingMixin, PriorityQueue
+from datastructures import KeyedComparisonMixin, PriorityQueue, Stack
 
 class Project(object):
     '''
@@ -102,7 +102,7 @@ class Project(object):
                 print ""
         return tree
     
-    def latest(self, start='END'):
+    def latest(self, start='END', debug=False):
         '''
         Find the latest start time for each task by traversing the tree,
         backwards and calculating the latest_start by subtracting the
@@ -115,21 +115,78 @@ class Project(object):
                 cost = (task.latest_start - t.duration) 
                 t.latest_start = cost if cost > 0 else 0
                 pq.push(t)
-                #print "set \"%s\" " % t.name 
             tree.update({task.name: task})
 
         tree = dict() 
         pq = PriorityQueue(lambda x: x.latest_start, []) 
         
-        # init by setting the ``start`` as the first task in the tree.
         start_task = self.tasks[start] 
         start_task.latest_start = start_task.earliest_start
         add_to_tree(start_task)
         
+        if debug:
+            print "\n| %s in tree | " % start_task.name,
+            self._p_queue(pq.heap)
+            print ""
+        
         while(pq.size > 0):
-            add_to_tree(pq.pop())
+            c = pq.pop()
+            add_to_tree(c)
+            if debug:
+                print "| %s(%s) in tree | " % (c.name, c.latest_start),
+                self._p_queue(pq.heap)
+                print ""
             
         return tree        
+    
+    def critical(self, start='START'):
+        '''
+        1. for each node follow the predecessors if the node has no slack.
+        2. traverse predecessor and repeat step 1.
+        
+        The function will return one critical path. If there are more critical
+        paths it will only return one arbitrary of them.
+        
+        '''
+        top = self.topological()
+        path = Stack([self.tasks[start]])
+        bad = set()
+        
+        def _visits(task):
+            if len(task.successors.values()) == 0:
+                return True
+            for t in task.successors.values():
+                if t.earliest_start == t.latest_start and t not in bad:
+                    path.push(t)
+                    return _visits(t)
+            return False
+        
+        for t in top:
+            if _visits(t):
+                break
+            pop = path.pop()
+            bad.add(t)
+        return path
+    
+    def topological(self, start='START'):
+        '''
+        return a list topological sorted nodes using a depth-first search. 
+        
+        '''
+        def _visit(task):
+            if task.name not in visited:
+                visited.add(task.name)
+                for t in task.predecessors:
+                    _visit(t)
+                topo.append(task)
+                
+        topo = []
+        visited = set()
+        
+        for task in self.tasks.itervalues():
+            _visit(task)
+        
+        return topo
         
     @property
     def size(self):

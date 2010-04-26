@@ -14,8 +14,7 @@ When we have found the earliest start of each task, and the duration of the proj
 We work from the 'End' task, where the latest start must be the same as the earliest start (otherwise the project would be delayed)
 Any other task must end before the latest start of all task that depends on it. That is its latest start is the minimum of the latest start of the successors, minus its own duration.
 
-#### Slack and critical path
-    
+#### Slack and critical path  
     
 The difference between the earliest possible start and the latest possible start is called slack. It is the amount of time the task can be delayed without delaying the project.
 Tasks with zero slack cannot be delayed without delaying the project. They are critical to completing the project on time.
