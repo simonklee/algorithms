@@ -50,44 +50,56 @@ class Project(object):
             for p in task.predecessors:
                 p.successors.update({task.name: task})
     
-    def dijkstra(self, start='START', reversed=False):
+    def earliest(self, start='START', debug=False):
         '''
         Will find the shortest path for each task limited by the tasks
         prerequisites, that is, every task before it in the one-directional
         tree. As a result the tasks in the ``tasks`` dict will have
-        their earliest_start updated. This is a sort of reversed dijkstra
-        shortest path algorithm. It looks for the longest path.
+        their earliest_start updated. 
         
-        '''        
-        def add_to_pq(successor, tasks=[]):
-            for t in tasks:
-                if t in tree:
-                    continue
-                old_task = pq.get(t)
-                new_cost = t.duration + successor.earliest_start
-                if old_task == None:
-                    t.earliest_start = new_cost
-                    pq.push(t)
-                    #print "added earliest_start(%s) to \"%s\"" % (t.earliest_start, t.name)
-                #elif old_task.earliest_start > new_cost:
-                #    print "changed earliest_start(%s -> %s) to \"%s\"" % (
-                #        t.earliest_start, new_cost, t.name)
-                #    t.earliest_start = new_cost
+        | N (latest start) |  State of Queue            |
+        -------------------------------------------------
+        | START(0) in tree |  queue: A(0) B(0) 	        | 0
+        | A(0) in tree     |  queue: B(0) E(3) D(3) 	| 1 
+        | B(0) in tree     |  queue: E(3) D(3) C(4) 	| 2
+        | E(3) in tree     |  queue: D(3) C(4) END(5) 	| 3
+        | D(3) in tree     |  queue: C(4) END(5) F(4) 	| 4
+        | C(4) in tree     |  queue: F(4) END(5) 	| 5
+        | F(4) in tree     |  queue: END(5) 	        | 6
+        | END(7) in tree   |  queue:                    | 7
+        -------------------------------------------------
         
+        '''
         def add_to_tree(task):
-            add_to_pq(task, task.successors.itervalues())
+            for t in task.successors.values():
+                new = task.duration + task.earliest_start
+                old = t.earliest_start
+                t.earliest_start = new if old < new else old # None < 2 == True
+                if t not in tree:
+                    pq.push(t)
+
             tree.update({task.name: task})
         
         tree = dict()
-        pq = PriorityQueue(lambda x: x.earliest_start, [])  # lookup table of what is next.
+        pq = PriorityQueue(lambda x: x.earliest_start, [])
         
         # init by setting the ``start`` as the first task in the tree.
         start_task = self.tasks[start] 
         start_task.earliest_start = start_task.duration
         add_to_tree(start_task)
         
+        if debug:
+            print "\n| %s in tree | " % start_task.name,
+            self._p_queue(pq.heap)
+            print ""
+        
         while(pq.size > 0):
-            add_to_tree(pq.pop_big())
+            c = pq.pop()
+            add_to_tree(c)
+            if debug:
+                print "| %s(%s) in tree | " % (c.name, c.earliest_start),
+                self._p_queue(pq.heap)
+                print ""
         return tree
     
     def latest(self, start='END'):
@@ -100,7 +112,8 @@ class Project(object):
         '''
         def add_to_tree(task):
             for t in filter(lambda x: x not in tree, task.predecessors):
-                t.latest_start = task.latest_start - t.duration if t.duration > 0 else 0
+                cost = (task.latest_start - t.duration) 
+                t.latest_start = cost if cost > 0 else 0
                 pq.push(t)
                 #print "set \"%s\" " % t.name 
             tree.update({task.name: task})
@@ -128,7 +141,12 @@ class Project(object):
             for p in t.predecessors:
                 print "%s" % p.name,
             print ""
-
+    
+    def _p_queue(self, queue):
+        print "queue:",
+        for k, v in queue:
+            print "%s(%s)" % (v.name, k),
+        print "\t",
 
 class Task(KeyedComparisonMixin):
     '''

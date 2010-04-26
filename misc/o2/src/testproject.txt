@@ -11,6 +11,20 @@
 # dependencies (if present) must be names of other tasks
 #
 # Blank lines and comments are ignored. Comments start with '#'.
+#START 0 :
+#B 1 : START
+#C 1 : B
+#A 3 : START C
+
+#START 0 :
+#A 3 : START
+#D 1 : A
+#E 2 : A
+#F 3 : D E
+#C 3 : F
+#B 4 : C
+#END 0 : B 
+
 START 0 :
 A 3 : START
 B 4 : START

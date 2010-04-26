@@ -11,20 +11,23 @@ class ProjectTest(unittest.TestCase):
         self.p = Project('testproject.txt')    
         super(ProjectTest, self).__init__(*args, **kwargs)
 
-    def test_dijkstra(self):
+    def test_earliest(self):
         expected = (
             ('START', 0),
-            ('A', 3),
-            ('B', 4),
-            ('C', 7),
-            ('D', 4),
-            ('E', 5),
-            ('F', 7),
+            ('A', 0),
+            ('B', 0),
+            ('C', 4),
+            ('D', 3),
+            ('E', 3),
+            ('F', 4),
             ('END', 7),
         )
-        tree = self.p.dijkstra()
+        tree = self.p.earliest()
         for name, earliest_start in expected:
             self.assertEqual(tree[name].earliest_start, earliest_start)
+            #print "%s @ earliest_start: %s" % (name, tree[name].earliest_start)
+        #for k, v in tree.iteritems():
+        #    print "%s @ %s" % (k, v.earliest_start)
     
     def test_latest(self):
         expected = (
@@ -38,13 +41,13 @@ class ProjectTest(unittest.TestCase):
             ('END', 7),
         )
         p = Project('testproject.txt')
-        p.dijkstra()
+        p.earliest(debug=True)
         tree = p.latest()
         for name, latest_start in expected:
             self.assertEqual(tree[name].latest_start, latest_start)
-        
-        for k, v in tree.iteritems():
-            print "%s @ %s" % (k, v.latest_start)
+           # print "%s @ latest_start: %s" % (name, tree[name].latest_start)
+        #for k, v in tree.iteritems():
+        #    print "%s @ %s" % (k, v.latest_start)
 
     def test_tasks(self):
         a = Task('A', 2)
@@ -99,9 +102,6 @@ class TestPriorityQueue(unittest.TestCase):
     def test_contains(self):
         pq = PriorityQueue(lambda i: i.__key__(), self.items)
         self.assertEqual(pq.contains(Item(4)), True)
-        
-    def test_project(self):
-        p = Project('testproject.txt')
-
+    
 if __name__ == '__main__':
     unittest.main()
